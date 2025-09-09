@@ -1,0 +1,12 @@
+name: snakehive
+
+channels:
+- bioconda
+- conda-forge
+
+dependencies:
+- snakemake
+- python
+- coincbc
+- time
+- snakemake-executor-plugin-slurm

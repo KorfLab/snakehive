@@ -32,7 +32,7 @@
 - `slurm/config.yaml` has two notable keys. `executor` specifies which job scheduler to use. `slurm` is not one of the default schedulers that comes with Snakemake, so it has to be separately installed via Conda. The other notable key is `jobscript`. This has to be added so that Snakemake knows where to find the script to submit to slurm.
 - `slurm/jobscript.sh` has two notable aspects. The first one being how all the sbatch dependencies are variables. This is so that each rule that is submitted to the cluster can run with uniquely specified resources. Another notable aspect is `{exec_job}`. This is a placeholder that Snakemake replaces later on with the command to run.
 
-# 01_example
+# 00_example
 
 ## Goal
 - Show example of what a basic Snakemake pipeline looks like
@@ -71,20 +71,49 @@ Snakemake can take either python or R scripts. For python scripts, variables in 
 
 Scripts can also be run in the shell directive. They would run like they would normally on the command line. In `mk_input.smk` rule, `mk_input.py` is called on and arguments are passed with sys.argv.
 
+# 01_example
+
+## Goal
+- Show how Snakemake interacts with slurm
+- Adhere to best practices by finding the minimum required resources for a job
+
+## Explanation of Slurm Directory
+The cleanest way to run Snakemake is to use profiles since they allow for the desired Snakemake options to be neatly put into a yaml file. When running Snakemake as a job in hive, specifying `jobs` instead of `cores` is needed because using `cores` will run Snakemake locally instead of on the cluster.
+
+In order to run each rule separately, a jobsript has to be specified in the slurm profile. This will allow Snakemake to submit a unique job to the cluster for each rule. This process is important because it allows each rule to run with its own resources. So one rule can use more resources when a different rule can use less.
+
+## sbatch script
+There are two sbatch scripts that run snakemake `snakerun.slurm` and `test.slurm`. The only difference between the two is that `test.slurm` is used to test the entire workflow from start to finish. 
+- `test.slurm` will recreate all conda environments and rerun all the rules. - `snakerun.slurm` is what you would see in a functioning workflow. It will only create conda environments if needed and only run rules as needed.
+
+## Memory usage finder
+It is good practice to only request resources as needed. Requesting too much waste resources that someone else can use, and requesting too little kills the job. It is always recommended to find the maximum amount of resources the job and each rule takes.
+
+`run_checker.sh` and `get_mem.slurm` are used to submit multiple of the same jobs and collect the maximum about of memory used by snakemake. 
+
+The memory used by each job can be obtained by wrapping the command in `usr/bin/time`. In this example, the time command was installed in the conda environment and called upon in the rule.
+
 # 02_example
 
 ## Goals:
 - Provide exmaple of wildcard usuage
 - Provide example of how config files are used
 - Provide example of `params` directive
+- Show how python code can be used in Snakefiles
+- Provide example of multithreading
 
 ## Snakefile Explanation
-`rule all` is where wildcards should be expanded using `expand()`.  `expand()` used in conjunction with wildcards allows multiple similar files to be called on without having to explictly stating each one. In this case, the name of the wildcard is `num` and it corresponds `trials` in the config file.
+`rule all` is where wildcards are expanded using `expand()`.  `expand()` used in conjunction with wildcards allows multiple similar files to be called on without having to explictly stating each one. In this case, the name of the wildcard is `num` and it corresponds `trials` in the config file.
 
 ## More Snakemake Rules Explanation
 In any rule, contents of a config file can be accessed using `config['<someconfig>']`. When a .smk file is used in the main Snakefile, the config file must be specified in a directive called `config` in the module. After specifying the config file in the main Snakefile, configs can be accessed in the .smk file as if it is part of the main Snakefile.
 
-`params` is a directive that allows for more variables to be specified outside of the code that is run. In this example, `rule mk_db` inside of `mk_in.smk` uses `params` as a way to specify flags. Specifying flags outside of the code that is run makes it more clear what the flags are and makes them easier to change if needed.
+`params` is a directive that allows for more variables to be specified outside of the code that is run. In this example, `rule get_read` uses params as a way to control the length and amount of reads generated, and these variables are meant to be changed depending on the user's wants. For best practices, variables that are meant to be changed should call upon a config from the config file because the goal is to have only one file that controls the operation of the Snakemake pipeline. `params` can also be used as a way to organize options for flags as seen in `rule mk_db`.
 
-## Why use config files
-Config files should be used to keep the main Snakefile clear. Everything in the config file can be specified before `rule all` in the Snakefile, but that could get messy and make the logic of the workflow harder to follow.
+`threads` is a directive that specifies the number of threads a rule can use. If the number of cores is less than the specified threads, Snakemake will automatically use less threads instead of erroring out. For best practices, the number or threads should be optimized for memory usage and time.
+
+## Why Use Config Files
+Config files are used as a way to control the Snakemake pipeline. It provides the user with one file where all the options for the pipeline are stored, and modifying the pipeline only takes modifying one file. Having one file that controls the pipeline allows it to be flexable and organized.
+
+## Python code in a Snakefile
+Any amount of python code can be used before `rule all` is specified. This can be useful for generating a list that gets used as a wildcard in the following rules. It is possible to specify configs like python variables, but this goes against best practices because it could make the Snakefile messy and harder to follow.

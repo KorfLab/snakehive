@@ -79,7 +79,7 @@ default-resources:
 sacct -j 4069835 --format=JobID,JobName,MaxRSS,MaxVMSize,State
 jid=$(sbatch --parsable mem_test.slurm)
 sbatch --dependency=afterany:$jid log_mem.slurm
-sacct -j 4392777 --format=JobID,State,MaxRSS,ReqMem
+sacct -j 4551766 --format=JobID,State,MaxRSS,ReqMem
 
 shared_storage_local_copies: True
 remote_exec: False
@@ -90,18 +90,9 @@ use-conda: true
 conda-frontend: mamba
 latency-wait: 10
 
-cluster: "sbatch --cpus-per-task={threads} \
-  --mem={cluster.mem_mb} \
-  --time={cluster.time} \
-  --partition=low \
-  --account=publicgrp \
-  --job-name={rule} \
-  --output=jobs/%j/{rule}.out \
-  --err=jobs/%j/{rule}.err"
-cluster-config: "slurm/cluster_config.yaml"
+results/blast_out{num}.txt
 
 8-20: works rm but cant oom a single rule yet must investigate further
 8-21: success now have to document
 8-24: THings to do
-- 3: make local only example and slurm example (separate example 1)
-- 4: update examples.md with changes
+8-29: reduce the size of `blastn -task megablast` to 11 or so. generate millions of reads. use bigger genome. try threads and see if it affects speed. if does translate to slurm n run on cluster for further testing.
