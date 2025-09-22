@@ -1,5 +1,5 @@
 executor: slurm
-jobs: 10
+jobs: 20
 use-conda: true
 latency-wait: 60
 default-resources:
