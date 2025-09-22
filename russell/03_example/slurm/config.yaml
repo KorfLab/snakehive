@@ -1,0 +1,10 @@
+executor: slurm
+jobs: 10
+use-conda: true
+latency-wait: 60
+default-resources:
+  slurm_partition: "low"
+  slurm_account: "publicgrp"
+  mem_mb: 2000
+  runtime: 15
+jobscript: "slurm/jobscript.sh"
