@@ -1,0 +1,10 @@
+name: blast
+
+channels:
+- bioconda
+- conda-forge
+
+dependencies:
+- python
+- time
+- blast
