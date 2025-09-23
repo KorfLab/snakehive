@@ -7,4 +7,4 @@ parser.add_argument('--end', type=int)
 arg = parser.parse_args()
 
 for i in range(arg.start, arg.end+1):
-    os.system(f'sacct --format=jobid,state,maxrss,memreq,elapsed -j {i}')
+    os.system(f'sacct --format=jobid,state,maxrss,reqmem,elapsed -j {i}')
