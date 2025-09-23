@@ -7,4 +7,3 @@ default-resources:
   slurm_account: "publicgrp"
   mem_mb: 2000
   runtime: 15
-  slurm_logdir: "jobs"
