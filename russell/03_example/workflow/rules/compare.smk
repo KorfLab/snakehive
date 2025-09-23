@@ -12,6 +12,8 @@ rule move:
         stderr = 'workflow/logs/move.err'
     conda:
         '../envs/simple.yaml'
+    resources:
+        mem_mb=125
     shell:
         '''
         mkdir -p {output} 2> {log.stderr}
@@ -28,6 +30,8 @@ rule compare:
         stderr = 'workflow/logs/compared.err'
     conda:
         '../envs/simple.yaml'
+    resources:
+        mem_mb=256
     shell:
         '''
         rm {input}/.snakemake_timestamp 2>> {log.stderr}

@@ -6,4 +6,4 @@ default-resources:
   slurm_partition: "low"
   slurm_account: "publicgrp"
   mem_mb: 2000
-  runtime: 15
+  runtime: 5
