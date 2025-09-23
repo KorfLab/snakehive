@@ -33,7 +33,7 @@ rule blast_unfiltered:
         stdout = 'workflow/logs/no.out',
         stderr = 'workflow/logs/no.err'
     resources:
-        mem_mb=150
+        mem_mb=225
     shell:
         '''
         blastn \
