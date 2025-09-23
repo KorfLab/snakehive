@@ -6,7 +6,7 @@
 #SBATCH --err=jobs/%j/{rule}.err
 #SBATCH --cpus-per-task={threads}
 #SBATCH --mem={resources.mem_mb}MB
-#SBATCH --time={resources.time_min}
+#SBATCH --time={resources.time}
 
 source /etc/profile
 module load conda
