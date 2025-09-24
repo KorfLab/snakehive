@@ -2,8 +2,10 @@ executor: slurm
 jobs: 50
 use-conda: true
 latency-wait: 60
+retries: 2
 default-resources:
   slurm_partition: "low"
   slurm_account: "publicgrp"
   mem_mb: 2000
   runtime: 5
+jobscript: "slurm/jobscript.sh"

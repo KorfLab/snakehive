@@ -10,7 +10,7 @@ rule blast:
         stdout = 'workflow/logs/{thres}-{win}-{link}.out',
         stderr = 'workflow/logs/{thres}-{win}-{link}.err'
     resources:
-        mem_mb=225
+        mem_mb=200
     shell:
         '''
         blastn \
@@ -33,7 +33,7 @@ rule blast_unfiltered:
         stdout = 'workflow/logs/no.out',
         stderr = 'workflow/logs/no.err'
     resources:
-        mem_mb=225
+        mem_mb=200
     shell:
         '''
         blastn \
