@@ -13,7 +13,7 @@ rule move:
     conda:
         '../envs/simple.yaml'
     resources:
-        mem_mb=150
+        mem_mb=200
     shell:
         '''
         mkdir -p {output} 2> {log.stderr}
