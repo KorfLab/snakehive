@@ -13,7 +13,7 @@ rule move:
     conda:
         '../envs/simple.yaml'
     resources:
-        mem_mb=150
+        mem_mb=150,
         runtime=1
     shell:
         '''
@@ -32,7 +32,7 @@ rule compare:
     conda:
         '../envs/simple.yaml'
     resources:
-        mem_mb=150
+        mem_mb=150,
         runtime=3
     shell:
         '''
