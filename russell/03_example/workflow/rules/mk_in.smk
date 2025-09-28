@@ -13,7 +13,7 @@ rule get_read:
         lenread = config['reads']['length']
     resources:
         mem_mb=200,
-        time=2
+        runtime=2
     shell:
         '''
         command time -v python3 workflow/scripts/get_read.py \

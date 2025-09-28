@@ -8,4 +8,3 @@ default-resources:
   slurm_account: "publicgrp"
   mem_mb: 2000
   runtime: 5
-jobscript: "slurm/jobscript.sh"
