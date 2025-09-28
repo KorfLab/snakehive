@@ -12,7 +12,7 @@ rule get_read:
         nreads = config['reads']['number'],
         lenread = config['reads']['length']
     resources:
-        mem_mb=200,
+        mem_mb=225,
         runtime=2
     shell:
         '''
@@ -40,7 +40,7 @@ rule mk_db:
         dbtype = 'nucl',
         in_type = 'fasta'
     resources:
-        mem_mb=200,
+        mem_mb=225,
         runtime=2
     shell:
         '''

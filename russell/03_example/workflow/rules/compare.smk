@@ -32,7 +32,7 @@ rule compare:
     conda:
         '../envs/simple.yaml'
     resources:
-        mem_mb=150,
+        mem_mb=200,
         runtime=3
     shell:
         '''
