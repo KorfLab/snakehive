@@ -9,4 +9,3 @@ default-resources:
   mem_mb: 2000
   runtime: 5
 jobscript: "slurm/jobscript.sh"
-slurm-log-dir: "jobs"
