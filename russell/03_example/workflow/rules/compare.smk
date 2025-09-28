@@ -13,8 +13,7 @@ rule move:
     conda:
         '../envs/simple.yaml'
     resources:
-        mem_mb=150,
-        runtime=1
+        mem_mb=150
     shell:
         '''
         mkdir -p {output} 2> {log.stderr}
@@ -32,8 +31,7 @@ rule compare:
     conda:
         '../envs/simple.yaml'
     resources:
-        mem_mb=200,
-        runtime=3
+        mem_mb=200
     shell:
         '''
         rm {input}/.snakemake_timestamp 2>> {log.stderr}
