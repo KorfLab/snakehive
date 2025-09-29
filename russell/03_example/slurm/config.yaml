@@ -9,6 +9,5 @@ default-resources:
   mem_mb: 2000
   runtime: 5
 jobname: "{rule}-{jobid}"
-slurm:
-  slurm-keep-successful-logs: true
-  slurm-logdir: "jobs/{jobid}"
+slurm-keep-successful-logs: true
+slurm-logdir: "jobs/{jobid}"
