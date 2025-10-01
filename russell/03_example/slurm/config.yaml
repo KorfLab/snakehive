@@ -8,6 +8,7 @@ default-resources:
   slurm_account: "publicgrp"
   mem_mb: 2000
   runtime: 5
-jobname: "this-jobname-{jobid}"
+jobname: "this_jobname_{jobid}"
 slurm-keep-successful-logs: true
 slurm-logdir: "jobs/"
+jobscript: "slurm/jobscript.sh"
