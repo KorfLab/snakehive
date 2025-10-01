@@ -12,3 +12,4 @@ jobname: "this_jobname_{jobid}"
 slurm-keep-successful-logs: true
 slurm-logdir: "jobs/"
 jobscript: "slurm/jobscript.sh"
+conda-frontend: mamba
