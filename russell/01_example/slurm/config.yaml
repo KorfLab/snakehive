@@ -7,4 +7,5 @@ default-resources:
   slurm_account: "publicgrp"
   mem_mb: 2500
   runtime: 15
-jobscript: "slurm/jobscript.sh"
+slurm-keep-successful-logs: true
+slurm-logdir: "jobs/"
