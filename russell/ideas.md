@@ -96,3 +96,5 @@ results/blast_out{num}.txt
 8-21: success now have to document
 8-24: THings to do
 8-29: reduce the size of `blastn -task megablast` to 11 or so. generate millions of reads. use bigger genome. try threads and see if it affects speed. if does translate to slurm n run on cluster for further testing.
+9-16: make faster by allowing it to be scheduled as separate jobs
+9-22: works get rid of all jobscripts
