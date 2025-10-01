@@ -23,20 +23,31 @@
 
 - `rules` is where all the snakemake rules are stored. They end with the `.smk` extension to indicate that it is a snakemake rule. They are kept separate from the main snakefile so that it keeps the snakefile concise and easy to read.
 
-- `scripts` is where all the scripts that are run by the snakefile rules are stored. They are kept together for organization. They are either R or Python scripts.
+- `scripts` is where all the scripts that are run by the snakefile rules are stored. They are kept together for organization. They can be either R or Python scripts.
 
-`templete.slurm` is an example script that would be submitted to hive. This templete script starts the default lines for using conda in a script. Submitting a job to the cluster will create a directory called `jobs` where all cluster output will go.
+`templete.slurm` is an example script that would be submitted to hive. This templete script starts the default lines for using conda in a script. Submitting a job to the cluster will create a directory called `jobs` where all cluster outputs will go.
 
 `slurm` contains the profile for running snakemake on the cluster and the script that Snakemake will submit to the cluster for each rule.
 > As a reminder Snakemake looks for `config.yaml` specifically when using a profile.
-- `slurm/config.yaml` has two notable keys. `executor` specifies which job scheduler to use. `slurm` is not one of the default schedulers that comes with Snakemake, so it has to be separately installed via Conda. The other notable key is `jobscript`. This has to be added so that Snakemake knows where to find the script to submit to slurm.
-- `slurm/jobscript.sh` has two notable aspects. The first one being how all the sbatch dependencies are variables. This is so that each rule that is submitted to the cluster can run with uniquely specified resources. Another notable aspect is `{exec_job}`. This is a placeholder that Snakemake replaces later on with the command to run.
+
+- In `slurm/config.yaml` the `executor` key specifies which job scheduler to use. `slurm` is not one of the default schedulers that comes with Snakemake, so it has to be separately installed via Conda.
+
+- Increasing the number of `jobs` allows snakemake to schedule more jobs at the same time.
+
+- `use-conda` is required when planning to use conda environments in the workflow.
+
+- `latency-wait` is important for making sure output files are visible on other nodes once the node working on the file writes into it. Without sufficent `latency-wait` time, snakemake can incorrectly fail a job.
+
+- `default-resources` allows for the jobs that snakemake submit to be customized.
+
+- `slurm-keep-successful-logs` and `slurm-logdir` allow for the logs from each snakemake job submission to be kept, and gives it a place to be sent to. Without `slurm-logdir`, the logs will be sent to `.snakemake/slurm_logs`.
 
 # 00_example
 
 ## Goal
 - Show example of what a basic Snakemake pipeline looks like
 - Use best practices when writing a pipeline
+- Run snakemake locally
 
 ## Explanation of Snakefile
 `configfile` is specifies the global config file for this Snakefile. It can be called on by using the variable `config` (no quotes), or it can be called on in scripts using `snakemake.config`. Specific configs can be called on with this syntax `config['<some_variable>']`.
@@ -44,7 +55,7 @@
 `rule all` should be the first rule in any Snakefile. It is the default rule that Snakemake looks for as its target rule.
 - Target rule is the rule that specifies the intended output for the whole Snakefile.
 
-`module` loads in a snakefile of rule/s that is from somewhere outside of this Snakefile. For best practices all snakefiles used loaded in with module must have the `.smk` extension. This will make it clear what kind of file it is just by the name. Modules need to contain a `config` directive if the rule that the module runs uses a script. When running shell commands, there does not need to be a `config` directive.
+`module` loads in a snakefile of rule/s that is from somewhere outside of this Snakefile. For best practices all snakefiles loaded in with module must have the `.smk` extension. This will make it clear what kind of file it is just by the name. Modules need to contain a `config` directive if the rule that the module runs uses a script. When running shell commands, there does not need to be a `config` directive. `config` directive should also be used when referencing a config inside of a rule.
 
 `use rule * from <module>` tells Snakemake to use all rules from a specific module. The rule that is used can be customized and does not have to be `*`.
 
