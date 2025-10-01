@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=snakerun
+#SBATCH --job-name=01_run
 #SBATCH --account=publicgrp
 #SBATCH --partition=low
 #SBATCH --output=jobs/%j/%x.out

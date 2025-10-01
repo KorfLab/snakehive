@@ -8,4 +8,5 @@ default-resources:
   mem_mb: 2500
   runtime: 5
   threads: 1
-jobscript: "slurm/jobscript.sh"
+slurm-keep-successful-logs: true
+slurm-logdir: "jobs/"
