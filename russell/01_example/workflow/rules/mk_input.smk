@@ -6,7 +6,6 @@ rule mk_input:
     log:
         stdout='workflow/logs/mk_input.out',
         stderr='workflow/logs/mk_input.err'
-    threads: 1
     resources:
         mem_mb=256
     shell:

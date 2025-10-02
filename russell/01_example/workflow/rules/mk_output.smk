@@ -9,7 +9,6 @@ rule mk_output:
     log:
         stdout='workflow/logs/mk_output.out',
         stderr='workflow/logs/mk_output.err'
-    threads: 1
     resources:
         mem_mb=256
     shell:

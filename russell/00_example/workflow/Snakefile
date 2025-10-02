@@ -2,7 +2,7 @@ configfile: 'config/config.yaml'
 
 rule all:
     input:
-        'results/01_output.bam'
+        'results/00_output.bam'
 
 module mk_input:
     snakefile:
