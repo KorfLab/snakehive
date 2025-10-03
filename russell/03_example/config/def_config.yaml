@@ -1,0 +1,16 @@
+genome: 'resources/1pct.fa'
+reads:
+  number: 1000
+  length: 500
+thresholds:
+- 10
+- 20 # default
+- 40
+windows:
+- 32
+- 64 # default
+- 128
+linkers:
+- 0
+- 1 # default
+- 2
