@@ -1,4 +1,4 @@
-configfile: 'config/sm_config.yaml'
+configfile: 'config/config.yaml'
 
 rule all:
 	input:
