@@ -39,7 +39,7 @@ rule mk_db:
         dbtype = 'nucl',
         in_type = 'fasta'
     resources:
-        mem_mb=175
+        mem_mb=200
     shell:
         '''
         command time -v makeblastdb \
