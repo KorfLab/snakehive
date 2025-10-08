@@ -1,4 +1,4 @@
-trials: 10
+trials: 5
 genome: 'resources/1pct.fa'
 reads:
   number: 1000

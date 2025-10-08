@@ -79,7 +79,7 @@ default-resources:
 sacct -j 4069835 --format=JobID,JobName,MaxRSS,MaxVMSize,State
 jid=$(sbatch --parsable mem_test.slurm)
 sbatch --dependency=afterany:$jid log_mem.slurm
-sacct -j 4551766 --format=JobID,State,MaxRSS,ReqMem
+sacct -j 4551766 --format=JobID,State,MaxRSS,ReqMem,elapsed,timelimit
 
 shared_storage_local_copies: True
 remote_exec: False

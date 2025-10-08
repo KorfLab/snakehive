@@ -105,7 +105,7 @@ The memory and time used by each job can be obtained by running `sacct --format=
 
 # 02_example
 
-## Goals:
+## Goal
 - Provide exmaple of wildcard usuage
 - Provide example of how config files are used
 - Provide example of `params` directive
@@ -122,6 +122,8 @@ In any rule, contents of a config file can be accessed using `config['<someconfi
 
 `threads` is a directive that specifies the number of threads a rule can use. If the number of cores is less than the specified threads, Snakemake will automatically use less threads instead of erroring out. For best practices, the number or threads should be optimized for memory usage and time.
 
+One important note is that using a directory as an output in a rule requires `directory(<dir>)` to be specified.
+
 ## Why Use Config Files
 Config files are used as a way to control the Snakemake pipeline. It provides the user with one file where all the options for the pipeline are stored, and modifying the pipeline only takes modifying one file. Having one file that controls the pipeline allows it to be flexable and organized.
 
@@ -129,5 +131,22 @@ Config files are used as a way to control the Snakemake pipeline. It provides th
 Any amount of python code can be used before `rule all` is specified. This can be useful for generating a list that gets used as a wildcard in the following rules. It is possible to specify configs like python variables, but this goes against best practices because it could make the Snakefile messy and harder to follow.
 
 ## Resource management
-
 In this example, finding the amount of resources is different than `01_example`. This uses `full_run.py` to rerun the entire pipeline with conda installation and clearing the existing files. This command `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` is still used after the run to see specifically the amount of resources used.
+
+The program `summary.py` takes in a range of jobids and runs `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` on all of them and prints them out. It allows all the resources of the different jobs to be printed to standard out.
+
+# 03_example
+
+## Goal
+- Create an example of Snakemake submitting many multiple jobs in parallel
+- Show example of using 
+
+## Explanation
+The formatting of the workflow is similar to `02_example`. The only difference being the use of dust, a low complexity filter for Blast. Changing the settings for this filter allows for the same inputs to generate different output.
+
+Snakemake is great with taking similar jobs and running them parallel. This allows for massive workflows to be done quicker especially on clusters. It is much easier to get a job to run on a cluster if they request less resources. So breaking up a large workflow to work in parallel allows it get out of the cluster queue faster.
+
+## Snakefile and Rules
+The main difference between the `02_example` and this example is the use of `rule compare` and the input for `rule all`. The input for `rule all` is only one file so that means the wildcards have to expanded in a different rule. In this example, `rule move` was used to expand the wildcards allowing Snakemake to call for the desired outputs.
+
+The potentially interesting aspect of the workflow is the use of `rule move`. The purpose of the rule is to make sure that the directory `results/blast` is made and that all the finished files are put into that directory so that `rule compare` is able to use `results/blast` as an input. This is a design choice of the workflow because the script used to combine all the blast outputs uses a directory instead of inputing each individual file. When planning on using a directory as an input for a rule, Snakemake does not check whether or not the directory has files, but Snakemake only cares for existence the directory. This can lead to failed workflows without the presence of the completed input files. Ultimately, this can be avoided if the inputs were files, but this makes can make a directory cluttered and unorganized.
