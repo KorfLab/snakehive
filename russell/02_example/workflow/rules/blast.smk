@@ -11,7 +11,7 @@ rule blast:
         stderr = 'workflow/logs/blast.err{num}'
     threads: 2
     resources:
-        mem_mb=200
+        mem_mb=250
     shell:
         '''
         command time -v blastn \
