@@ -6,7 +6,7 @@ default-resources:
   slurm_partition: "low"
   slurm_account: "publicgrp"
   mem_mb: 2500
-  runtime: 5
+  runtime: 8
   threads: 1
 slurm-keep-successful-logs: true
 slurm-logdir: "jobs/"
