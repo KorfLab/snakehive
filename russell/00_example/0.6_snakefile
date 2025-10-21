@@ -1,0 +1,9 @@
+rule files:
+    output:
+        file_1 = 'results/file_1.txt',
+        file_2 = 'results/file_2.txt'
+    shell:
+        '''
+        echo "this is file 1" > {output.file_1}
+        echo "this is file 1" > {output.file_2}
+        '''

@@ -1,0 +1,8 @@
+rule multiple_lines:
+    output:
+        'results/multi.txt'
+    shell:
+        '''
+        echo "this rule has a multiple line shell directive" > {output}
+        cat {output}
+        '''

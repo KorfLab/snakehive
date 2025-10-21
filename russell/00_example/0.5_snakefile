@@ -1,0 +1,9 @@
+rule long_command:
+    output:
+        'results/long.txt'
+    shell:
+        '''
+        echo "this echo command is meant to be really long \
+        so that it can demonstate how backslashes can be used \
+        to make a long command neat" > {output}
+        '''

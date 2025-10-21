@@ -1,0 +1,5 @@
+rule greetings:
+    output:
+        'results/greetings.txt'
+    shell:
+        'echo "greetings from a different snakefile" > {output}'

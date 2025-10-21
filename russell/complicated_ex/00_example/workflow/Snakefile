@@ -16,4 +16,3 @@ module mk_output:
 
 use rule * from mk_input
 use rule * from mk_output
-

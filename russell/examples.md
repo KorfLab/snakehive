@@ -1,3 +1,50 @@
+# 00_example: Intro to Snakemake and the Basics of Rules
+Please make `00_example` the working directory
+
+## Goal
+- Get Snakemake running
+- Learn about the minimum requirements to get a snakefile to run
+
+## Installing Snakemake
+This Snakemake installation assumes user has the base conda environment installed and activated.
+
+The easiest way to aquire the Snakemake program is to install it via conda and the bioconda channel. In the directory outside of the example, `basic.yaml` is a conda environment that contains snakemake in its most basic form. Create the environment with `conda env create -f basic.yaml` (Note `mamba` can be used in place of `conda` for a faster installation). After finishing installation, the environment can be activated with `conda activate snakemake`.
+
+## Running Snakemake
+Getting snakemake to run is as simple as `snakemake --cores 1`. When running `snakemake --cores 1`, Snakemake looks for `Snakefile` somewhere in the working directory and runs it with one core. The number of cores specifies the maximum number of cores allowed for the run.
+> Note: `snakemake -c 1` == `snakemake --cores 1`
+- Try `snakemake -c 1`. This will run `Snakefile` and produce a file call `hello.txt` in the results directory containing "hello world".
+
+A specific snakefile can be run using `snakemake -c 1 -s <snakefile>`. `<snakefile>` is a placeholder for the name of the snakefile.
+> Note: `snakemake -s <snakefile>` == `snakemake --snakefile <snakefile>`
+- Try `snakemake -c 1 -s 0.1_snakefile`. This will create a different file called `greetings.txt` in the results directory containing "greetings from a different snakefile".
+
+## Basics of Snakemake Rules
+When Snakemake runs, it first looks for a target rule. This is the rule that acts as a goal for the workflow. For now, the target rule will be the rule that is at the top of the page.
+- Try `snakemake -c 1 -s 0.2_snakefile`. This will only produce `first.txt` even though there is a second rule that produces `second.txt` because `rule first` is a the top of the snakefile.
+- Now try `snakemake -c 1 -s 0.3_snakefile`. This will produce `second.txt` because `rule second` is at the top of the snakefile in `0.3_snakefile`.
+
+In order to get a rule to work, there has to be two directives that have to be present. Directives are indicated by an indent followed by the direcitve and a colon. As seen in `Snakefile`, the two required directives are `output` and `shell`. `output` specifies the path of the output file. `shell` runs a shell command.
+
+The `output` directive is where the path of the output file is specified. The path and the name of the output is specified as a string. If multiple outputs are specified, they are in different strings separated by a comma. The different outputs can also be assigned to a variable so they can be specifically referenced later on.
+
+The shell commands that is run on the `shell` can either be a single line string or a multiline string. In `Snakefile`, `rule hello` uses a single line string indicated by the command enclosed by quotes. In `0.4_snakefile`, a multiline string is used indicated by the triple quotes in the first and last line of the shell directive. Single line strings can be useful for running a single short command. Multiline strings are useful for executing multiple commands and organizing long commands.
+- Look at `0.4_snakefile`. It uses a multiline string in the shell directive to run `echo` and `cat`.
+- Look at `0.5_snakefile`. It uses a multiline string in the shell directive to run a long `echo` command.
+
+Accessing other directives in the shell directory uses the syntax `{<name of directive>}`. In the case where there is a variable assigned in the directive, like in `rule files` in `0.6_snakefile`, the syntax for accessing the variable is `{<directive>.<variable>}`.
+
+# 01_example: Intro to Rule Directives
+
+## Goal
+- Learn the basics of important directives
+
+## Examples and Explanations
+Remember that running a snakefile is `snakemake -c 1 -s <snakefile>`.
+
+### input directive
+
+
 # Template
 
 ## Goal
