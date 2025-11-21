@@ -1,0 +1,19 @@
+configfile: 'config/5.5_config.yaml'
+
+rule fam_count:
+    output:
+        'results/fam_count.tsv'
+    params:
+        pat1 = config['fam']['paternal']['gen_1'],
+        pat2 = config['fam']['paternal']['gen_2'],
+        pat3 = config['fam']['paternal']['gen_3'],
+        mat1 = config['fam']['maternal']['gen_1'],
+        mat2 = config['fam']['maternal']['gen_2'],
+        mat3 = config['fam']['maternal']['gen_3']
+    shell:
+        '''
+        printf "generation\tpaternal\tmaternal\n" > {output}
+        printf "gen1\t{params.pat1}\t{params.mat1}\n" >> {output}
+        printf "gen2\t{params.pat2}\t{params.mat2}\n" >> {output}
+        printf "gen3\t{params.pat3}\t{params.mat3}" >> {output}
+        '''

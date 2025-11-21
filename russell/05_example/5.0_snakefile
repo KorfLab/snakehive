@@ -1,0 +1,7 @@
+rule config:
+    output:
+        'results/config_test.txt'
+    params:
+        config['message']
+    shell:
+        'echo {params} > {output}'

@@ -1,0 +1,9 @@
+configfile: 'config/5.3_config.yaml'
+
+rule many_msgs:
+    output:
+        'results/many_msgs.txt'
+    params:
+        config['messages']
+    shell:
+        'echo "These are the many messages: {params}" > {output}'

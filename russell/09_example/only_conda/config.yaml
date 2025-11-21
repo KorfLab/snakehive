@@ -1,0 +1,2 @@
+cores: 1
+conda-create-envs-only: True

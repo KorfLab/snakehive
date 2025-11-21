@@ -1,0 +1,9 @@
+fam:
+  paternal:
+    gen_1: 5
+    gen_2: 10
+    gen_3: 6
+  maternal:
+    gen_1: 3
+    gen_2: 6
+    gen_3: 10

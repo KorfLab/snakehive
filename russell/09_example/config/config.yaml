@@ -1,0 +1,4 @@
+genome: "resources/1pct.fa"
+codons:
+  - "ATG"
+  - "CAA"

@@ -1,0 +1,8 @@
+rule var_inputs:
+    input:
+        fasta = '1pct.fa',
+        dir = 'empty_dir'
+    output:
+        'results/var_inputs.txt'
+    shell:
+        'echo {input.fasta} {input.dir} > {output}'

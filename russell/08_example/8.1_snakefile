@@ -1,0 +1,11 @@
+rule echo:
+    output:
+        'results/8.1_echo.txt'
+    shell:
+        'echo {output} > {output}'
+        
+rule touch:
+    output:
+        'results/8.1_touch.txt'
+    shell:
+        'touch {output}'

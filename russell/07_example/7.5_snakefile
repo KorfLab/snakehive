@@ -1,0 +1,13 @@
+configfile: 'config/7.5_config.yaml'
+
+rule all:
+    input:
+        'results/7.5_counts.txt'
+
+module counting:
+    snakefile:
+        'rules/count.smk'
+    config:
+        config
+
+use rule * from counting

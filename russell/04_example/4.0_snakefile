@@ -1,0 +1,14 @@
+rule all:
+    input:
+        'results/part1.txt'
+
+rule part1:
+    input:
+        'resources/1pct.fa'
+    output:
+        'results/part1.txt'
+    shell:
+        '''
+        echo "This is the input: {input}" > {output}
+        echo "This is the output: {output}" >> {output}
+        '''

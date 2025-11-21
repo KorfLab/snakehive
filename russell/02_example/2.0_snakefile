@@ -1,0 +1,11 @@
+rule log:
+    output:
+        'results/rule_log.txt'
+    log:
+        'logs/rule_log.out'
+    shell:
+        '''
+        touch {output}
+        echo "this is the output: {output}" > {log}
+        echo "this is the log: {log}" >> {log}
+        '''

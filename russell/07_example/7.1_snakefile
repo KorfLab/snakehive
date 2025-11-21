@@ -1,0 +1,15 @@
+rule all:
+    input:
+        'results/7.1_echo.txt',
+        'results/7.1_touch.txt'
+
+module make_file:
+    snakefile:
+        'rules/touch.smk'
+
+module write_new_file:
+    snakefile:
+        'rules/echo.smk'
+
+use rule echo from write_new_file
+use rule touch from make_file

@@ -1,9 +1,9 @@
-rule long_command:
+rule files:
     output:
-        'results/long.txt'
+        file_1 = 'results/file_1.txt',
+        file_2 = 'results/file_2.txt'
     shell:
         '''
-        echo "this echo command is meant to be really long \
-        so that it can demonstate how backslashes can be used \
-        to make a long command neat" > {output}
+        echo "this is file 1" > {output.file_1}
+        echo "this is file 2" > {output.file_2}
         '''

@@ -1,0 +1,11 @@
+rule second:
+    output:
+        'results/second.txt'
+    shell:
+        'echo "hello from rule second" > {output}'
+
+rule first:
+    output:
+        'results/first.txt'
+    shell:
+        'echo "hello from rule first" > {output}'

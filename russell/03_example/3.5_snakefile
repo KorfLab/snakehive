@@ -1,0 +1,17 @@
+rule all:
+    input:
+        'results/3.5_touch.txt'
+
+rule touch:
+    output:
+        'results/3.5_touch.txt'
+    shell:
+        'touch {output}'
+
+rule grep:
+    input:
+        '1pct.fa'
+    output:
+        'results/3.5_grep.txt'
+    shell:
+        'grep -c ATG {input} > {output}'

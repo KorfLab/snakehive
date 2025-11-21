@@ -1,0 +1,8 @@
+rule run_var_out:
+    output:
+        outfile = 'results/run_var_out.txt',
+        foo = 'results/foo.txt'
+    run:
+        with open(output[0], 'w') as out:
+            out.write(f'these are the outputs: {output}')
+        open(output[1], 'a').close()

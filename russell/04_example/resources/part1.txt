@@ -1,0 +1,2 @@
+This is the input: resources/1pct.fa
+This is the output: resources/part1.txt

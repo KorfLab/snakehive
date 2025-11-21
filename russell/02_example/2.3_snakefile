@@ -1,0 +1,9 @@
+rule params:
+    input:
+        '1pct.fa'
+    output:
+        'results/params.txt'
+    params:
+        codon = 'ATG'
+    shell:
+        'grep -c {params.codon} {input} > {output}'

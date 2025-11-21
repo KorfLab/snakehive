@@ -1,0 +1,11 @@
+rule all:
+    input:
+        'results/7.3_echo.txt',
+        'results/7.3_touch.txt'
+
+module two_in_one:
+    snakefile:
+        'rules/combo.smk'
+
+use rule touch from two_in_one
+use rule echo from two_in_one

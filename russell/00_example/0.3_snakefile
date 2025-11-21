@@ -1,11 +1,9 @@
-rule second:
+rule long_command:
     output:
-        'results/second.txt'
+        'results/long.txt'
     shell:
-        'echo "hello from rule second" > {output}'
-
-rule first:
-    output:
-        'results/first.txt'
-    shell:
-        'echo "hello from rule first" > {output}'
+        '''
+        echo "this echo command is meant to be really long \
+        so that it can demonstate how backslashes can be used \
+        to make a long command neat" > {output}
+        '''

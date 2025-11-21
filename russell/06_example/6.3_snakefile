@@ -1,0 +1,23 @@
+rule all:
+    input:
+        'results/6.1_sample_a.txt',
+        'results/6.1_sample_b.txt',
+        'results/6.1_sample_c.txt'
+
+rule sample_a:
+    output:
+        'results/6.1_sample_a.txt'
+    shell:
+        'echo {output} > {output}'
+
+rule sample_b:
+    output:
+        'results/6.1_sample_b.txt'
+    shell:
+        'echo {output} > {output}'
+
+rule sample_c:
+    output:
+        'results/6.1_sample_c.txt'
+    shell:
+        'echo {output} > {output}'

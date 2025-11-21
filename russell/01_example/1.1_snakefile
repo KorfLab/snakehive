@@ -1,0 +1,8 @@
+rule multi_inputs:
+    input:
+        '1pct.fa',
+        'empty_dir'
+    output:
+        'results/multi_inputs.txt'
+    shell:
+        'echo {input} > {output}'

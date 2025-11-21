@@ -1,0 +1,11 @@
+rule var_log:
+    output:
+        'results/var_log.txt'
+    log:
+        stdout = 'logs/var_log.out',
+        stderr = 'logs/var_log.err'
+    shell:
+        '''
+        touch {output}
+        command time echo "{output}" > {log.stdout} 2> {log.stderr}
+        '''

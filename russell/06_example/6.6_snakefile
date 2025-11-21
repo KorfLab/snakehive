@@ -1,0 +1,11 @@
+configfile: 'config/6.6_config.yaml'
+
+rule all:
+    input:
+        expand('results/{status}_weather.txt', status=config['weather'])
+
+rule weather:
+    output:
+        'results/{status}_weather.txt'
+    shell:
+        'echo "The weather can be {wildcards.status} tomorrow" > {output}'

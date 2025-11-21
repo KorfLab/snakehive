@@ -1,0 +1,11 @@
+configfile: 'config/6.7_config.yaml'
+
+rule all:
+    input:
+        expand('results/combo_{num}_{let}.txt', num=config['numbers'], let=config['letters'])
+
+rule combo:
+    output:
+        'results/combo_{num}_{let}.txt'
+    shell:
+        'touch {output}'

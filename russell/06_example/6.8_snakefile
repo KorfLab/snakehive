@@ -1,0 +1,14 @@
+configfile: 'config/6.8_config.yaml'
+
+rule all:
+    input:
+        expand('results/6.8_files/{col}_{num}_{eat}.txt',
+            col = config['colors'],
+            num = config['numbers'],
+            eat = config['foods'])
+
+rule orders:
+    output:
+        'results/6.8_files/{col}_{num}_{eat}.txt'
+    shell:
+        'echo "Can I get {wildcards.num} {wildcards.col} {wildcards.eat} to go please" > {output}'

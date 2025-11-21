@@ -1,0 +1,9 @@
+rule all:
+    input:
+        'results/7.0_touch.txt'
+
+module make_file:
+    snakefile:
+        'rules/touch.smk'
+
+use rule touch from make_file

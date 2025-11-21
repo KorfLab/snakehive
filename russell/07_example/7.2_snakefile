@@ -1,0 +1,9 @@
+rule all:
+    input:
+        'results/7.2_echo.txt'
+
+module two_in_one:
+    snakefile:
+        'rules/combo.smk'
+
+use rule echo from two_in_one

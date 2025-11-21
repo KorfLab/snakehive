@@ -1,0 +1,9 @@
+configfile: 'config/5.1_snakefile.yaml'
+
+rule message:
+    output:
+        'results/message.txt'
+    params:
+        config['message']
+    shell:
+        'echo {params} > {output}'

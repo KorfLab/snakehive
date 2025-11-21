@@ -1,0 +1,15 @@
+configfile: 'config/5.2_config.yaml'
+
+rule multikey:
+    output:
+        'results/multikey.txt'
+    params:
+        num = config['fav_num'],
+        bev = config['fav_drink'],
+        plc = config['fav_place']
+    shell:
+        '''
+        echo "My favorite beverage is {params.bev}" > {output}
+        echo "I like to have {params.num} gallons of {params.bev}" >> {output}
+        echo "Unfortunately I cannot do this at {params.plc}" >> {output}
+        '''

@@ -1,0 +1,5 @@
+rule echo:
+    output:
+        'results/8.0_echo.txt'
+    shell:
+        'echo {output} > {output}'

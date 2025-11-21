@@ -1,0 +1,7 @@
+rule input:
+    input:
+        '1pct.fa'
+    output:
+        'results/input.txt'
+    shell:
+        'head {input} > {output}'

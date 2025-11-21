@@ -1,0 +1,6 @@
+rule run_directive:
+    output:
+        'results/run_directive.txt'
+    run:
+        with open(output[0], 'w') as out:
+            out.write(f'this is my output: {output[0]}')

@@ -1,0 +1,11 @@
+configfile: 'config/goal.yaml'
+
+rule all:
+    input:
+        expand('results/6.2_sample_{letter}.txt', letter=config['samples'])
+
+rule samples_all:
+    output:
+        'results/6.2_sample_{letter}.txt'
+    shell:
+        'echo {output} > {output}'

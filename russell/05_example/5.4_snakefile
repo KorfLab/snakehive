@@ -1,0 +1,15 @@
+configfile: 'config/5.4_config.yaml'
+
+rule msgs_123:
+    output:
+        'results/msgs_123.txt'
+    params:
+        one = config['messages'][0],
+        two = config['messages'][1],
+        three = config['messages'][2]
+    shell:
+        '''
+        echo "Message 1: {params.one}" > {output}
+        echo "Message 2: {params.two}" >> {output}
+        echo "Message 3: {params.three}" >> {output}
+        '''

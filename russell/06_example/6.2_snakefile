@@ -1,0 +1,17 @@
+rule sample_a:
+    output:
+        'results/6.0_sample_a.txt'
+    shell:
+        'echo {output} > {output}'
+
+rule sample_b:
+    output:
+        'results/6.0_sample_b.txt'
+    shell:
+        'echo {output} > {output}'
+
+rule sample_c:
+    output:
+        'results/6.0_sample_c.txt'
+    shell:
+        'echo {output} > {output}'

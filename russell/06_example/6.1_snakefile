@@ -1,0 +1,10 @@
+rule target:
+    default_target: True
+    input:
+        'results/6.1_touch.txt'
+
+rule touch:
+    output:
+        '{example_num}_touch.txt'
+    shell:
+        'touch {output}'

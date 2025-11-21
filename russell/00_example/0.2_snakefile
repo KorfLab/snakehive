@@ -1,11 +1,8 @@
-rule first:
+rule multiple_lines:
     output:
-        'results/first.txt'
+        'results/multi.txt'
     shell:
-        'echo "hello from rule first" > {output}'
-
-rule second:
-    output:
-        'results/second.txt'
-    shell:
-        'echo "hello from rule second" > {output}'
+        '''
+        echo "this rule has a multiple line shell directive" > {output}
+        cat {output}
+        '''

@@ -1,0 +1,11 @@
+samples = ['a', 'b', 'c']
+
+rule all:
+    input:
+        expand('results/6.3_sample_{letter}.txt', letter=samples)
+
+rule samples_all:
+    output:
+        'results/6.3_sample_{letter}.txt'
+    shell:
+        'echo {output} > {output}'

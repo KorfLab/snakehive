@@ -1,0 +1,21 @@
+configfile: 'config/config.yaml'
+
+rule all:
+    input:
+        'results/script.txt',
+        expand('results/{codon}_abundancy.txt', codon=config['codons'])
+
+module script:
+    snakefile:
+        'rules/script.smk'
+    config:
+        config
+
+module codon_search:
+    snakefile:
+        'rules/get_codon.smk'
+    config:
+        config
+
+use rule * from script
+use rule * from codon_search

@@ -1,0 +1,7 @@
+rule script:
+    input:
+        '1pct.fa'
+    output:
+        'results/script.txt'
+    script:
+        'ex_py_script.py'

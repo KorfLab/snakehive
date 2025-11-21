@@ -1,0 +1,5 @@
+rule dir_output:
+    output:
+        directory('results/dir_output')
+    shell:
+        'mkdir {output}'

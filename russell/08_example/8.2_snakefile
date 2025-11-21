@@ -1,0 +1,7 @@
+rule conda:
+    output:
+        'results/conda.txt'
+    conda:
+        'time.yaml'
+    shell:
+        'command time -v touch {output} 2> {output}'
