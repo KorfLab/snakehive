@@ -15,14 +15,14 @@ the bioconda channel. In the directory outside of the example, `basic.yaml` is
 a conda environment that contains snakemake in its most basic form. Create the
 environment and activate it with the following commands:
 
-```bash
+```sh
 conda env create -f basic.yaml
 conda activate snakemake
 ```
 
 ## Running Snakemake
 
-```
+```sh
 cd 00_example
 snakemake -c 1
 ```
@@ -357,6 +357,39 @@ The only directory in this organizational structure that has more levels is the 
 With everything discussed up until this point. You should be able to start creating Snakemake workflows and running them locally. The later examples will go over how to properly use Snakemake with HIVE.
 
 # 10_example: Basics for Running Snakemake on HIVE
+
+## Goal
+
+- Get familiar with the a SLURM script
+- Run basic Snakemake on HIVE
+
+## Getting access to HIVE
+
+- Getting account
+
+## Using HIVE as a local computer
+
+Note: All commands will be run on the HIVE terminal and not your local computer's terminal for this section.
+
+The most basic way to use HIVE is to run scripts interactively on a terminal like you would on a terminal from a local machine. To open a terminal on HIVE, first request an interactive session with Hive OnDemand with `publicgrp` account, `low` partition, `1` core, `4` GB of RAM, and `1` to `2` hours. The number of GPUs is `0` and the GPU type can be left blank. This should open a session rather quickly. 
+
+Launch the HIVE desktop when the session begins. Open the terminal using the second icon at the bottom on the screen. This icon should be a black box with a dollar sign and an underscore in the box. To activate Conda on HIVE, use the command
+
+```sh
+module load conda
+```
+
+Clone this github repo in the directory of your choosing make `10_example` the working directory in the HIVE terminal.
+
+To showcase this, run the following command on the terminal in the HI
+
+```sh
+
+```
+
+## Running a script in HIVE
+
+
 
 # 11_example: Resource Management for Workflows on HIVE
 
