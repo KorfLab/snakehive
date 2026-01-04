@@ -5,8 +5,8 @@
 #SBATCH --output=jobs/%j/%x.out
 #SBATCH --err=jobs/%j/%x.err
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=2MB
-#SBATCH --time=1:00
+#SBATCH --mem=5MB
+#SBATCH --time=0:30
 
 source /etc/profile
 module load conda
