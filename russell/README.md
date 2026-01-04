@@ -356,40 +356,85 @@ The only directory in this organizational structure that has more levels is the 
 
 With everything discussed up until this point. You should be able to start creating Snakemake workflows and running them locally. The later examples will go over how to properly use Snakemake with HIVE.
 
-# 10_example: Basics for Running Snakemake on HIVE
+# 10_example: Basics for Running Snakemake on Hive
 
 ## Goal
 
 - Get familiar with the a SLURM script
-- Run basic Snakemake on HIVE
+- Run basic Snakemake on Hive
 
-## Getting access to HIVE
+## Getting access to Hive
 
 - Getting account
 
-## Using HIVE as a local computer
+## Using Hive as a local computer
 
-Note: All commands will be run on the HIVE terminal and not your local computer's terminal for this section.
+Note: All commands will be run on the Hive terminal and not your local computer's terminal for this section.
 
-The most basic way to use HIVE is to run scripts interactively on a terminal like you would on a terminal from a local machine. To open a terminal on HIVE, first request an interactive session with Hive OnDemand with `publicgrp` account, `low` partition, `1` core, `4` GB of RAM, and `1` to `2` hours. The number of GPUs is `0` and the GPU type can be left blank. This should open a session rather quickly. 
+The most basic way to use Hive is to run scripts interactively on a terminal like you would on a terminal from a local machine. To open a terminal on Hive, first request an interactive session with Hive OnDemand with `publicgrp` account, `low` partition, `1` core, `4` GB of RAM, and `1` to `2` hours. The number of GPUs is `0` and the GPU type can be left blank. This should open a session rather quickly. 
 
-Launch the HIVE desktop when the session begins. Open the terminal using the second icon at the bottom on the screen. This icon should be a black box with a dollar sign and an underscore in the box. To activate Conda on HIVE, use the command
+Launch the Hive desktop when the session begins. Open the terminal using the second icon at the bottom on the screen. This icon should be a black box with a dollar sign and an underscore in the box. To activate Conda on Hive, use the command
 
 ```sh
 module load conda
 ```
 
-Clone this github repo in the directory of your choosing make `10_example` the working directory in the HIVE terminal.
+Clone this github repo in the directory of your choosing make `10_example` the working directory in the Hive terminal. The purpose of the following example is to show how the Hive terminal can be used like the terminal on your local computer.
 
-To showcase this, run the following command on the terminal in the HI
+- Try the command below. `10.0_hello.py` is a simple script that prints `hello world`.
+
+    ```sh
+    python3 10.0_hello.py
+    ```
+
+## Running a script in Hive through Slurm
+
+The main method of running scripts on Hive is by submitting a job through a slurm script with the sbatch command. Your active jobs can be seen with by using the following command in the Hive terminal.
 
 ```sh
-
+squeue -u <username>
 ```
 
-## Running a script in HIVE
+> Note: `<username>` is a placeholder for your user name on Hive.
+- `-u` flag is for seeing jobs from a particular user, other flags can be seen with the following command used in the terminal.
 
+    ```sh
+    squeue --help
+    ```
 
+- Tip: The following command will allow `squeue -u <username>` to run every second essentially allowing you to keep track of your jobs in real time without having to rerun `squeue`. Use `ctrl + c` to cancel the command.
+
+    ```sh
+    watch -n 1 "squeue -u <username>"
+    ```
+
+Another useful slurm command is `scancel`. This followed by a jobid allows a specific job to be terminated. The different `scancel` options can be viewed with the help page, with the command shown below.
+
+```sh
+scancel --help
+```
+
+Run the following command that will run a slurm script which will result in `hello world` printed to _____.
+
+```sh
+sbatch 10.1_ex.slurm
+```
+
+> Note: When running a job with slurm, it will automatically get assigned an unique jobid.
+
+Review of `10.1_ex.slurm` line by line.
+- `#!/bin/bash` specifies that this script uses a bash shell
+- `#SBATCH --job-name=10.1_ex` specifies the name of the job attached to. In this example, the job name is `10.1_ex`. This job name is not exclusive for this job. So multiple jobs can have the same job name but they will always have different jobids. `#SBATCH` is called an slurm directive.
+    > Note: `%x` can be used as a variable placeholder for the jobname is other #SBATCH directives. Examples will be given later.
+- `#SBATCH --account=publicgrp` specifies which account to queue the job into. In this example, the account is `publicgrp`. If the lab or organization has its own account that you would like to queue the job into, this line can be changed to get bigger jobs out of the queue faster.
+- `#SBATCH --partition=low` specifies the partition used. For these examples, low partition is always used.
+- `#SBATCH --output=jobs/%j/%x.out` specifies the name of the output file and the path. In this example, the output will be put into a folder called jobs and in another folder with the jobid as its name. The file itself will be the jobname.
+    > Note: `%j` is a placeholder for the jobid. `%x` is a placeholder for job name.
+- `#SBATCH --err=jobs/%j/%x.err` specifies the path and the name of the error file. In this example, the error folder will also go into the jobs folder and the folder with the jobid name, but it will have `.err` file extension instead of `.out`.
+
+- `#SBATCH --cpus-per-task=1` specifies the number of cpus the job will use. In this example, the number of cpus requested is 1.
+
+- `
 
 # 11_example: Resource Management for Workflows on HIVE
 
