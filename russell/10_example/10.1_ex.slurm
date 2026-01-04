@@ -5,11 +5,11 @@
 #SBATCH --output=jobs/%j/%x.out
 #SBATCH --err=jobs/%j/%x.err
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=32MB
+#SBATCH --mem=64MB
 #SBATCH --time=1:00
 
 source /etc/profile
 module load conda
-source $(conda info --base)/etc/profile.d/conda.sh
+conda load snakehive
 
-python3 hello_saved.py
+command time -v python3 hello_saved.py
