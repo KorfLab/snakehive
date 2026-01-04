@@ -5,11 +5,11 @@
 #SBATCH --output=jobs/%j/%x.out
 #SBATCH --err=jobs/%j/%x.err
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=5MB
-#SBATCH --time=0:30
+#SBATCH --mem=16MB
+#SBATCH --time=1:00
 
 source /etc/profile
 module load conda
 source $(conda info --base)/etc/profile.d/conda.sh
 
-python3 10.0_hello.py
+python3 hello_saved.py
