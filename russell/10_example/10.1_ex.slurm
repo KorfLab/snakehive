@@ -11,6 +11,5 @@
 source /etc/profile
 module load conda
 source $(conda info --base)/etc/profile.d/conda.sh
-conda activate snakehive
 
-command time -v python3 hello_saved.py
+python3 hello_saved.py
