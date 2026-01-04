@@ -432,9 +432,17 @@ Review of `10.1_ex.slurm` line by line.
     > Note: `%j` is a placeholder for the jobid. `%x` is a placeholder for job name.
 - `#SBATCH --err=jobs/%j/%x.err` specifies the path and the name of the error file. In this example, the error folder will also go into the jobs folder and the folder with the jobid name, but it will have `.err` file extension instead of `.out`.
 
-- `#SBATCH --cpus-per-task=1` specifies the number of cpus the job will use. In this example, the number of cpus requested is 1.
+- `#SBATCH --cpus-per-task=1` specifies the number of cpus the job will use. In this example, the number of cpus requested is 1. The number of cpus should be kept to a minimum to allow resources for other users and it gets your job out of queue faster.
 
-- `
+- `#SBATCH --mem=40MB` specifies the amount of memory this job gets. This example requests 40MB of memory. The amount of memory requested is important because using the minimum amount of memory for a job does not tie up resources for other users and allows your job to get out of queue faster.
+
+- `#SBATCH --time=1:00` specifies the time limit for the job. This example requests 1 minute. The time chosen should be enough to allow the job to run completely but not too much as to hold up resources when a job is stuck in a continuous loop.
+
+- `source /etc/profile` initializes the module system when first running the job. This is important so that the conda module can be loaded in.
+
+- `module load conda` loads the conda module and activates the base environment.
+
+- `python3 hello_saved.py` is the command that we want to run. In this example, a text file is produced with 'hello world' printed inside.
 
 # 11_example: Resource Management for Workflows on HIVE
 
