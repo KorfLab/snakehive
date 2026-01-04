@@ -10,6 +10,6 @@
 
 source /etc/profile
 module load conda
-conda load snakehive
+conda activate snakehive
 
 command time -v python3 hello_saved.py
