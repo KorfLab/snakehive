@@ -444,7 +444,9 @@ Review of `10.1_ex.slurm` line by line.
 
 - `python3 hello_saved.py` is the command that we want to run. In this example, a text file is produced with 'hello world' printed inside.
 
-## 
+## Snakemake on Hive
+
+explain snakemake on hive and how interactive and sbatch is different how it submits jobs the min requirements explain slurm and adding it to environments
 
 # 11_example: Resource Management for Workflows on HIVE
 
