@@ -12,4 +12,4 @@ source /etc/profile
 module load conda
 conda activate snakehive
 
-snakemake --jobs 1 --executor slurm --snakefile hello_snakefile --default-resources slurm_account=publicgrp runtime=3
+snakemake --jobs 1 --executor slurm --snakefile hello_snakefile --default-resources slurm_account=publicgrp runtime=3 --latency-wait 60
