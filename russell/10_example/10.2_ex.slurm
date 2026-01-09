@@ -12,4 +12,4 @@ source /etc/profile
 module load conda
 conda activate snakehive
 
-snakemake --jobs 1 --executor slurm --snakefile hello_snakefile --default-resources account=publicgrp parition=low
+snakemake --jobs 1 --executor slurm --snakefile hello_snakefile --default-resources slurm_account=publicgrp parition=low
