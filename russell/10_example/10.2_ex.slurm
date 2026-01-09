@@ -10,5 +10,6 @@
 
 source /etc/profile
 module load conda
+conda activate snakehive
 
-python3 hello_snakefile
+snakemake --jobs 1 --executor slurm --snakefile hello_snakefile
