@@ -6,10 +6,10 @@
 #SBATCH --err=jobs/%j/%x.err
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=128MB
-#SBATCH --time=1:00
+#SBATCH --time=5:00
 
 source /etc/profile
 module load conda
 conda activate snakehive
 
-snakemake --jobs 1 --executor slurm --snakefile hello_snakefile --default-resources slurm_account=publicgrp runtime=1
+snakemake --jobs 1 --executor slurm --snakefile hello_snakefile --default-resources slurm_account=publicgrp runtime=3
