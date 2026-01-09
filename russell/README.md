@@ -448,7 +448,11 @@ Review of `10.1_ex.slurm` line by line.
 
 # 11_example: Resource Management for Workflows on HIVE
 
-# 12_example: More Example Workflows
+# 12_example: Conda in Snakemake on Hive
+
+# 13_example: Slurm Profiles
+
+# 14_example: More Example Workflows
 
 
 
