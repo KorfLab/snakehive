@@ -2,7 +2,7 @@ name: snakehive
 
 channels:
   - conda-forge
-  - bioconda
+  - bioconda  
 
 dependencies:
   - snakemake

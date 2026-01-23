@@ -16,7 +16,7 @@ a conda environment that contains snakemake in its most basic form. Create the
 environment and activate it with the following commands:
 
 ```sh
-conda env create -f basic.yaml
+conda env create -f basic.yaml --strict-channel-priority
 conda activate snakemake
 ```
 
@@ -459,7 +459,7 @@ Submitting a Snakemake job requires a conda environment containing snakemake to 
 In the interactive terminal run the following to download a basic snakemake conda environment for Hive. I am assuming you are in the same directory that contains `snakehive.yaml`.
 
 ```sh
-conda env create -f snakehive.yaml
+conda env create -f snakehive.yaml --strict-channel-priority
 ```
 
 
