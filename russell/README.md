@@ -423,13 +423,19 @@ sbatch 10.1_ex.slurm
 > Note: When running a job with slurm, it will automatically get assigned an unique jobid.
 
 Review of `10.1_ex.slurm` line by line.
+
 - `#!/bin/bash` specifies that this script uses a bash shell
+
 - `#SBATCH --job-name=10.1_ex` specifies the name of the job attached to. In this example, the job name is `10.1_ex`. This job name is not exclusive for this job. So multiple jobs can have the same job name but they will always have different jobids. `#SBATCH` is called an slurm directive.
     > Note: `%x` can be used as a variable placeholder for the jobname is other #SBATCH directives. Examples will be given later.
+
 - `#SBATCH --account=publicgrp` specifies which account to queue the job into. In this example, the account is `publicgrp`. If the lab or organization has its own account that you would like to queue the job into, this line can be changed to get bigger jobs out of the queue faster.
+
 - `#SBATCH --partition=low` specifies the partition used. For these examples, low partition is always used.
+
 - `#SBATCH --output=jobs/%j/%x.out` specifies the name of the output file and the path. In this example, the output will be put into a folder called jobs and in another folder with the jobid as its name. The file itself will be the jobname.
     > Note: `%j` is a placeholder for the jobid. `%x` is a placeholder for job name.
+
 - `#SBATCH --err=jobs/%j/%x.err` specifies the path and the name of the error file. In this example, the error folder will also go into the jobs folder and the folder with the jobid name, but it will have `.err` file extension instead of `.out`.
 
 - `#SBATCH --cpus-per-task=1` specifies the number of cpus the job will use. In this example, the number of cpus requested is 1. The number of cpus should be kept to a minimum to allow resources for other users and it gets your job out of queue faster.
@@ -445,6 +451,18 @@ Review of `10.1_ex.slurm` line by line.
 - `python3 hello_saved.py` is the command that we want to run. In this example, a text file is produced with 'hello world' printed inside.
 
 ## Snakemake on Hive
+
+There are two ways to use Snakemake on Hive. The first way is to run Snakemake through an interactive session. This is similar to how you would run Snakemake locally on a local machine. This is only encourage to test small workflows because an interactive session should use a small portion of the cluster's resources. The second way to run Snakemake is through submitting a job through sbatch. This allows the resources for the job to be set separate from the interactive session.
+
+Submitting a Snakemake job requires a conda environment containing snakemake to be used in the sbatch script. The conda environment is best made beforehand manually in an interactive session. This is mainly due to the resources it would take to make a conda environment versus the resources it would take to run the Snakemake workflow. The resources that would need to be requested in the sbatch script would be wasted after the conda environment is created. This is seen in the rest of the workflows that use conda environments later on.
+
+In the interactive terminal run the following to download a basic snakemake conda environment for Hive. I am assuming you are in the same directory that contains `snakehive.yaml`.
+
+```sh
+conda env create -f snakehive.yaml
+```
+
+
 
 explain snakemake on hive and how interactive and sbatch is different how it submits jobs the min requirements explain slurm and adding it to environments
 
