@@ -462,7 +462,15 @@ In the interactive terminal run the following to download a basic snakemake cond
 conda env create -f snakehive.yaml --strict-channel-priority
 ```
 
+After creating the conda environment, Snakemake can be used in the sbatch script by first activating the environment in the script. This can be seen in `10.2_ex.slurm` after conda is loaded.
 
+There are technically three flags that are required to running Snakemake and getting it to submit its own jobs to the cluster. There is one flag that is not required but essential. Lastly, there is one flag used for convience.
+
+- `--jobs` is the number of jobs Snakemake is allowed to request from the cluster at a time.
+- `--executor`
+- `--default-resources`
+
+`--latency-wait` might not be a required flag but it is essential. This is the amount of time Snakemake will wait for a file to appear in the system before marking the it as missing. This is needed on clusters because there can be a delay between when a file is made and when it appear visible on the system.
 
 explain snakemake on hive and how interactive and sbatch is different how it submits jobs the min requirements explain slurm and adding it to environments
 
