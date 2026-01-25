@@ -470,7 +470,7 @@ There are technically three flags that are required to running Snakemake and get
 
 - `--jobs` is the number of jobs Snakemake is allowed to request from the cluster at a time.
 - `--executor` specifies which job manager to use when submitting jobs.
-- `--default-resources` specifes the default resources Snakemake will use if none is given. The essentials for default resources are `slurm_account` and `runtime`.
+- `--default-resources` specifes the default resources Snakemake will use if none is given. The essentials for default resources are `slurm_account` and `runtime`. However, `threads` (number of cpus), `mem_mb` (memory in megabytes), and `slurm_partition` should be added as default resources as well. The defaults if not given are 1 thread, 1000 mb of memory, and high partition.
 
 `--latency-wait` might not be a required flag but it is essential. This is the amount of time Snakemake will wait for a file to appear in the system before marking the it as missing. This is needed on clusters because there can be a delay between when a file is made and when it appear visible on the system.
 
@@ -479,8 +479,6 @@ The example can be run with the follow command:
 ```sh
 sbatch 10.2_ex.slurm
 ```
-
-explain snakemake on hive and how interactive and sbatch is different how it submits jobs the min requirements explain slurm and adding it to environments
 
 # 11_example: Resource Management for Workflows on HIVE
 
