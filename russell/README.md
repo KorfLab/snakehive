@@ -91,7 +91,7 @@ The run directive runs a python command. There are a couple major differences be
 The script directive runs a python script. The script can access the different directives in the rule with the same syntax as the run directive with the addition of `snakemake.` at the front of the directive.
 - Look at `1.7_snakefile` and `ex_py_script.py`. The snakefile uses the script directive to access the python script. The python script accesses both the input and output directive from the rule. Notice how it uses `snakemake.input` instead of `input`.
 
-# 02_example: Logs,
+# 02_example: Logs, Conda, Params
 
 ## Goal
 
