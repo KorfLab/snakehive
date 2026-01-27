@@ -361,6 +361,7 @@ With everything discussed up until this point. You should be able to start creat
 
 ## Goal
 
+- Learn the Hive basics
 - Get familiar with the a SLURM script
 - Run basic Snakemake on Hive
 
@@ -481,6 +482,24 @@ sbatch 10.2_ex.slurm
 ```
 
 # 11_example: Resource Management for Workflows on HIVE
+
+## Goals
+
+- Explore why resource management is important on the cluster
+- Explore ways to test for the minimum required resources
+- Give example of how Snakemake can submit multiple jobs
+
+## Importance of resource management
+
+A crucial part of running any workflow on a cluster is resource management. This is important because resources are shared so occupying unused resources prevents fellow researchers from also using the cluster. Additionally, requesting large amount of resources can cause your workflow to be lower on the queue so it can take longer to run. The best solutions to this are requesting the minimum amount needed to run the workflow, and split up larger workflows into smaller jobs.
+
+## Testing for minimum resource requirement
+
+Running a job on the cluster often takes varying resource amounts. The simplest way to find the amount of resources is by running a workflow multiple times and using the `sacct` command. This is easier
+
+## Breaking up larger workflows
+
+## maybe conda on hive??
 
 # 12_example: Conda in Snakemake on Hive
 
