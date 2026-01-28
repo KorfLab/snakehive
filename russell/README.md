@@ -498,19 +498,36 @@ A crucial part of running any workflow on a cluster is resource management. This
 Running a job on the cluster often takes varying resource amounts. The simplest way to find the amount of resources is by running a workflow multiple times and using the `sacct` command. This is easier than checking the output of the job, but doing so it also another way to get the resources used by a job.
 - `--forceall` flag is a great tool to use to force snakemake the run the whole workflow even if the outputs are present. It is used in resources testing so that the outputs do not have to be manually deleted every run.
 
-Run the following command three times and only run the next iteration when the previous one is finished.
+Run the following command three times and only run the next iteration when the previous one is finished. When you see the name `11.0_ex` complete, then run the `sbatch` command again.
 
 ```sh
 sbatch 11.0_ex.slurm
 ```
 
-The progress of the workflow can be checked with the following command.
+The progress of the workflow can be checked with the following command. `11.0_ex` is complete it disappears from the `squeue` screen.
 
 ```sh
 squeue -u $USER
 ```
 
-When you see the name
+One tip for using squeue is that you can run the following command on a separate terminal. This will rerun the `squeue` command every second automatically giving you live updates on the jobs running under your username.
+
+```sh
+watch -n 1 "squeue -u $USER
+```
+
+```sh
+sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state
+```
+look for reqmem to maxrss to see mem required
+adjust on slurm script accordingly
+
+show how to control snakemake resources
+
+show how to automate to run tens at a time one at a time
+
+same as above but at the same time
+
 
 ## Breaking up larger workflows
 
