@@ -495,7 +495,22 @@ A crucial part of running any workflow on a cluster is resource management. This
 
 ## Testing for minimum resource requirement
 
-Running a job on the cluster often takes varying resource amounts. The simplest way to find the amount of resources is by running a workflow multiple times and using the `sacct` command. This is easier
+Running a job on the cluster often takes varying resource amounts. The simplest way to find the amount of resources is by running a workflow multiple times and using the `sacct` command. This is easier than checking the output of the job, but doing so it also another way to get the resources used by a job.
+- `--forceall` flag is a great tool to use to force snakemake the run the whole workflow even if the outputs are present. It is used in resources testing so that the outputs do not have to be manually deleted every run.
+
+Run the following command three times and only run the next iteration when the previous one is finished.
+
+```sh
+sbatch 11.0_ex.slurm
+```
+
+The progress of the workflow can be checked with the following command.
+
+```sh
+squeue -u $USER
+```
+
+When you see the name
 
 ## Breaking up larger workflows
 
