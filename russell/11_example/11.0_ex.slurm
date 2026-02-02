@@ -17,5 +17,4 @@ snakemake \
 --executor slurm \
 --snakefile hello_snakefile \
 --default-resources slurm_account=publicgrp runtime=3 --latency-wait 60 \
---forceall \
---job-name "11.0_smk"
+--forceall
