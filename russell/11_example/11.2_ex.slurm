@@ -20,6 +20,6 @@ snakemake \
 slurm_account=publicgrp \
 runtime=3 \
 slurm_partition=low \
-mem_mb=500 \
+mem=500M \
 --latency-wait 60 \
 --forceall
