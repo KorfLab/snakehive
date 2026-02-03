@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=11.0_ex
+#SBATCH --job-name=11.1_ex
 #SBATCH --account=publicgrp
 #SBATCH --partition=low
 #SBATCH --output=jobs/%j/%x.out
