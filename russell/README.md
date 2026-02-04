@@ -498,6 +498,8 @@ A crucial part of running any workflow on a cluster is resource management. This
 Running a job on the cluster often takes varying resource amounts. The simplest way to find the amount of resources is by running a workflow multiple times and using the `sacct` command. This is easier than checking the output of the job, but doing so it also another way to get the resources used by a job.
 - `--forceall` flag is a great tool to use to force snakemake the run the whole workflow even if the outputs are present. It is used in resources testing so that the outputs do not have to be manually deleted every run.
 
+### Setting the resources for a slurm script
+
 Run the following command three times and only run the next iteration when the previous one is finished. When you see the name `11.0_ex` complete, then run the `sbatch` command again.
 
 ```sh
@@ -516,11 +518,43 @@ One tip for using squeue is that you can run the following command on a separate
 watch -n 1 "squeue -u $USER
 ```
 
+The first thing you want to look for is to make sure the job state says completed. Then the maximum memory used can be seen with the follow command. You are looking first for the JobName of `11.0_ex`. Under that name, `batch` will be the sub job that actually uses the resources and that can be seen under the `MaxRss` column. Another way to identify the maximum memory used for a job is to look at the JobID. The `<jobid>.bat+` JobID will be the one that actually uses the resources.
+
 ```sh
 sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state
 ```
-look for reqmem to maxrss to see mem required
-adjust on slurm script accordingly
+
+After running `11.0_ex.slurm` three times, the highest MaxRss, same as maximum amount of memory used, is `145608K`. This means that out of the three runs, the highest amount of memory used was about 150MB. The memory on the slurm script will now be set to 200MB so that there is enough of a buffer incase the script requires more than 150MB. Look into `11.1_ex.slurm` to see the change on line 8.
+
+To double check, run the following command three times and waiting for the job to finish before submitting the next.
+
+```sh
+sbatch 11.1_ex.slurm
+```
+
+Check the MaxRss with the following command. Make sure the job state is completed.
+
+```sh
+sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state
+```
+
+The amount of requested memory can be changed in a slurm script so that the script still runs but you are not occupying unused resources.
+
+### Controlling Snakemake resources in a slurm script
+
+The default resources for a job Snakemake submits is separate from the resources that the slurm script that runs the Snakemake program.
+
+The default resources for a Snakemake submitted job is 1 core with 1GB of memory. For the purposes of these examples, the rules will rarely need that much memory, so it is a waste to tie up 1GB of memory when the workflow does not need it.
+
+The way to control the default resources Snakemake is allowed to request is through the `--default-resources` flag. Similar to the existing variables that already exist from the previous examples, there are other variables that control the default resources.
+
+- `slurm_account=publicgrp` essential to get Snakemake to submit jobs. Controls the account the job is submitted under. In this case, the account is publicgrp, but other accounts can be used if you have access.
+
+- `runtime=3` essential for getting Snakemake to submit jobs. This sets a limit to how long a job is allowed to run. In this case, the job will have to finish with 3 minutes.
+
+- `slurm_partition=low` not essential but should be used. This sets the priority of the job. In this case, the parition is set to low.
+
+- mem_mb
 
 show how to control snakemake resources
 
