@@ -554,9 +554,15 @@ The way to control the default resources Snakemake is allowed to request is thro
 
 - `slurm_partition=low` not essential but should be used. This sets the priority of the job. In this case, the parition is set to low.
 
-- mem_mb
+- `mem=200M` is the amount of memory Snakemake will request for a job. In this case, Snakemake is asking for 200MB for every job it request. This number was found by running `11.2_ex.slurm` and checking the amount of memory used with the following command.
 
-show how to control snakemake resources
+    ```sh
+    sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state
+    ```
+
+    - Note that Snakemake submitted jobs will have a job name containing a generate string. The best way to identify which jobs are the Snakemake submitted ones are by checking the slurm logs that appear in the `jobs` directory to get the job ID of the Snakemake jobs, or they should appear below the job name `11.2_ex` with a generated job name assuming no other jobs are submitted by you before this one finishes.
+
+show how to control snakemake resources in multiple rules
 
 show how to automate to run tens at a time one at a time
 
