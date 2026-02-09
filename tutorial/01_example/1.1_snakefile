@@ -1,6 +1,6 @@
 rule multi_inputs:
     input:
-        '1pct.fa',
+        '1pct.fa.gz',
         'empty_dir'
     output:
         'results/multi_inputs.txt'

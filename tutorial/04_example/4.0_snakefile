@@ -4,7 +4,7 @@ rule all:
 
 rule part1:
     input:
-        'resources/1pct.fa'
+        'resources/1pct.fa.gz'
     output:
         'results/part1.txt'
     shell:

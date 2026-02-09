@@ -8,4 +8,4 @@ rule codon:
     conda:
         '../envs/time.yaml'
     shell:
-        'command time -v grep -c {wildcards.codon} {input} > {output} 2> {log.stderr}'
+        'command time -v zgrep -c {wildcards.codon} {input} > {output} 2> {log.stderr}'

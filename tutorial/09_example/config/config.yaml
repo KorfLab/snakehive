@@ -1,4 +1,4 @@
-genome: "resources/1pct.fa"
+genome: "resources/1pct.fa.gz"
 codons:
   - "ATG"
   - "CAA"

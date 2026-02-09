@@ -1,6 +1,6 @@
 rule input:
     input:
-        '1pct.fa'
+        '1pct.fa.gz'
     output:
         'results/input.txt'
     shell:

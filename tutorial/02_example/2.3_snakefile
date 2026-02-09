@@ -1,9 +1,9 @@
 rule params:
     input:
-        '1pct.fa'
+        '1pct.fa.gz'
     output:
         'results/params.txt'
     params:
         codon = 'ATG'
     shell:
-        'grep -c {params.codon} {input} > {output}'
+        'zgrep -c {params.codon} {input} > {output}'

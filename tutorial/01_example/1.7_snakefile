@@ -1,6 +1,6 @@
 rule script:
     input:
-        '1pct.fa'
+        '1pct.fa.gz'
     output:
         'results/script.txt'
     script:

@@ -1,6 +1,6 @@
 rule var_inputs:
     input:
-        fasta = '1pct.fa',
+        fasta = '1pct.fa.gz',
         dir = 'empty_dir'
     output:
         'results/var_inputs.txt'

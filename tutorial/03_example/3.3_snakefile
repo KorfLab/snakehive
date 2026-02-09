@@ -6,11 +6,11 @@ rule touch:
 
 rule grep:
     input:
-        '1pct.fa'
+        '1pct.fa.gz'
     output:
         'results/3.3_grep.txt'
     shell:
-        'grep -c ATG {input} > {output}'
+        'zgrep -c ATG {input} > {output}'
 
 rule echo:
     default_target: True
