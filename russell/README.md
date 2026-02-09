@@ -16,8 +16,7 @@ a conda environment that contains snakemake in its most basic form. Create the
 environment and activate it with the following commands:
 
 ```sh
-conda config --set channel_priority strict
-conda env create -f basic.yaml
+conda env create -f basic.yaml --strict-channel-priority
 conda activate snakemake
 ```
 
@@ -25,16 +24,23 @@ conda activate snakemake
 
 ```sh
 cd 00_example
-snakemake -c 1
 ```
 
 Getting snakemake to run is as simple as `snakemake --cores 1`. When running `snakemake --cores 1`, Snakemake looks for `Snakefile` somewhere in the working directory and runs it with one core. The number of cores specifies the maximum number of cores allowed for the run.
 > Note: `snakemake -c 1` == `snakemake --cores 1`
-- Try `snakemake -c 1`. This will run `Snakefile` and produce a file call `hello.txt` in the results directory containing "hello world".
+- Try the following command. This will run `Snakefile` and produce a file call `hello.txt` in the results directory containing "hello world".
+
+    ```sh
+    snakemake -c 1
+    ```
 
 A specific snakefile can be run using `snakemake -c 1 -s <snakefile>`. `<snakefile>` is a placeholder for the name of the snakefile.
 > Note: `snakemake -s <snakefile>` == `snakemake --snakefile <snakefile>`
-- Try `snakemake -c 1 -s 0.1_snakefile`. This will create a different file called `greetings.txt` in the results directory containing "greetings from a different snakefile".
+- Try the following command. This will create a different file called `greetings.txt` in the results directory containing "greetings from a different snakefile".
+
+    ```sh
+    snakemake -c 1 -s 0.1_snakefile
+    ```
 
 ## Basics of Snakemake Rules
 
@@ -136,17 +142,45 @@ The params directive is useful for specifying options in the shell directive. Th
 When Snakemake runs, it first looks for a target rule. This is the rule that acts as a goal for the workflow. There are four ways to set a target rule.
 
 The first and easier way to set a target rule is the order of the rules. The rule that comes first on a snakefile will default be set as the target rule.
-- Try `snakemake -c 1 -s 3.0_snakefile`. This will only produce `first.txt` even though there is a second rule that produces `second.txt` because `rule first` is a the top of the snakefile.
-- Now try `snakemake -c 1 -s 3.1_snakefile`. This will produce `second.txt` because `rule second` is at the top of the snakefile in `3.1_snakefile`.
+- Try the following command. This will only produce `first.txt` even though there is a second rule that produces `second.txt` because `rule first` is a the top of the snakefile.
+
+    ```sh
+    snakemake -c 1 -s 3.0_snakefile
+    ```
+
+- Now try the following command. This will produce `second.txt` because `rule second` is at the top of the snakefile in `3.1_snakefile`.
+
+    ```sh
+    snakemake -c 1 -s 3.1_snakefile
+    ```
 
 The second method to set a target rule is through the command line when the snakemake command is ran. The available target rules can be displayed with the `--list-target-rules` flag or `-lt`. The target can be choosen by naming the target rule in the command.
-- Try `snakemake -s 3.2_snakefile -lt`. This command will list all the possible target rules.
-- Now try `snakemake -c 1 -s 3.2_snakefile grep`. This will produce `grep.txt` in the `results` folder, and this will avoid the other rules in the snakefile.
+- Try following command. This command will list all the possible target rules.
+    
+    ```sh
+    snakemake -s 3.2_snakefile -lt
+    ```
+
+- Now try the following command. This will produce `grep.txt` in the `results` folder, and this will avoid the other rules in the snakefile.
+
+    ```sh
+    snakemake -c 1 -s 3.2_snakefile grep
+    ```
+
 - Try a different target within `3.2_snakefile`.
 
 The third way to set a target rule is using the `default_target` directive and setting it to `True`. Out of the three methods so far, this is method is the best because it is clear that a rule is the target rule and reduces the length of the command. Calling a target rule in a command will override all methods.
-- Try `snakemake -c 1 -s 3.3_snakefile`. This file should only produce `echo.txt` in `results` folder.
-- Try `snakemake -c 1 -s 3.3_snakefile grep`. This is produce `results/grep.txt` because rule grep became the target when it was called in the command and overrided the `default_target` directive.
+- Try the following command. This file should only produce `echo.txt` in `results` folder.
+
+    ```sh
+    snakemake -c 1 -s 3.3_snakefile
+    ```
+
+- Try the following command. This is produce `results/grep.txt` because rule grep became the target when it was called in the command and overrided the `default_target` directive.
+
+    ```sh
+    snakemake -c 1 -s 3.3_snakefile grep
+    ```
 
 The fourth and final method to setting a target rule is with `rule all`.
 
@@ -154,8 +188,17 @@ The fourth and final method to setting a target rule is with `rule all`.
 
 `rule all` is a special rule because it is the Snakemake default target rule. Normally, input is the only directive used in rule all. The files specified in the input directive of rule all are the targets that Snakemake looks for.
 - See `3.4_snakefile`. Notice how rule all only has the input directive and the target file is `results/3.4_grep.txt`. Based on the target, Snakemake is going to look for rule that produces that file and run it.
-- Now try `snakemake -c 1 -s 3.4_snakefile`. Notice how the target file is produced from rule grep and rule touch is skipped.
-- Try `snakemake -c 1 -s 3.5_snakefile`. Notice how rule grep is skipped and rule touch is ran. This is because the target from rule all is found in rule touch so Snakemake runs this rule.
+- Now try the command below. Notice how the target file is produced from rule grep and rule touch is skipped.
+
+    ```sh
+    snakemake -c 1 -s 3.4_snakefile
+    ```
+
+- Try the command below. Notice how rule grep is skipped and rule touch is ran. This is because the target from rule all is found in rule touch so Snakemake runs this rule.
+
+    ```sh
+    snakemake -c 1 -s 3.5_snakefile
+    ```
 
 Another way to think about the interaction between rule all and subsequent rules is that Snakemake tries to match the input of rule all with the outputs of other rules. Based on how they match up, Snakemake will run the rule with the matching output. Congratulations, you have combined two rules to run with one Snakemake run.
 
@@ -201,12 +244,21 @@ By having the right inputs and outputs, Snakemake is able to run all the necessa
 The two most popular methods for accessing a config file in a snakefile is either through the command line or inside the snakefile.
 
 Accessing the config file using the command line requires the `--configfile` flag followed by the path to the config file. To use the different values in the config file, this syntax can be used in any directive `config['<key>']`. Note that the config key that you want to use is in a string format.
-- Try `snakemake -c 1 -s 5.0_snakemake --configfile config/5.0_config.yaml`. This should produce `results/config_test.txt` where it accesses the message in `5.0_config.yaml` and writes the message in the text file.
+- Try the following command. This should produce `results/config_test.txt` where it accesses the message in `5.0_config.yaml` and writes the message in the text file.
+
+    ```sh
+    snakemake -c 1 -s 5.0_snakemake --configfile config/5.0_config.yaml
+    ```
+
 - See `5.0_snakefile` and `config/5.0_config.yaml`. Notice how the key inside of the config file are accessed in the snakefile.
 
 The second way to access a config file is from within the snakefile. At the top of the snakefile `configfile: <path to file>` can be used to access the file. The keys in the config file can be used the same way as before with this syntax `config['<key>']`.
 - See `5.1_snakefile`. Biggest thing to note is the syntax to access the config file at the top of the file. Notice how the path is in string format.
-- Try `snakemake -c 1 -s 5.1_snakefile`. This should produce a text file containing the message that is in `config/5.1_config.yaml`.
+- Try the command below. This should produce a text file containing the message that is in `config/5.1_config.yaml`.
+
+    ```sh
+    snakemake -c 1 -s 5.1_snakefile
+    ```
 
 These next examples will showcase how there can be multiple keys in a config file, multiple values in the associate with a key, and a key nested within a key.
 
@@ -259,10 +311,18 @@ Wildcards can also be used in the shell directive. The only difference with usin
 One of the great things about wildcards is the ability to use multiple wildcards in one rule. Snakemake is able to produce all the possible combinations of wildcards.
 - See `6.7_snakefile`. The biggest thing to note here is how each wildcard used in the expand function needs to be assigned to a list of values.
 - See `config/6.7_config.yaml`. Notice how there are 2 values for each of the intended wildcards. So at the end, there should be 4 total uniquely labeled files.
-- Try `snakemake -c 1 -s 6.7_snakemake`. This example should produce 4 unique files. When looking at the snakemake logs that appear when running snakemake, it should say 5 jobs were completed because of rule all.
+- Try the following command. This example should produce 4 unique files. When looking at the snakemake logs that appear when running snakemake, it should say 5 jobs were completed because of rule all.
+
+    ```sh
+    snakemake -c 1 -s 6.7_snakemake
+    ```
 
 The last example just puts everything that was discussed into one snakefile.
-- Try `snakemake -c 1 -s 6.8_snakefile`. This is a great example of how snakemake is able to complete 28 jobs effortlessly.
+- Try the following command. This is a great example of how snakemake is able to complete 28 jobs effortlessly.
+
+    ```sh
+    snakemake -c 1 -s 6.8_snakefile
+    ```
 
 # 07_example: Modules
 
@@ -313,12 +373,21 @@ Profiles allows Snakemake to be run with a shorter command. It allows all the op
 
 To use a profile, there has to be a format the Snakemake recognizes. There has to be a directory with specifically `config.yaml` in that directory. The name of the directory does not matter for function, but it should be descriptive of how the workflow is run. `config.yaml` that lives inside of the profile direcory has to be exactly `config.yaml` because Snakemake will look for this file when running a profile to determine the options and flags used in the run.
 - See `run_8.0/config.yaml`. Notice how the name of the profile is descriptive. The file inside of the directory is exactly `config.yaml`. The options that would be noramlly used is in the config file.
-- Try `snakemake --profile run_8.0`. This is the same as running `snakemake -c 1 -s 8.0_snakefile`.
+- Try the following shell command. This is the same as running `snakemake -c 1 -s 8.0_snakefile`.
+
+    ```sh
+    snakemake --profile run_8.0
+    ```
 
 Target rules can also be specified in the profile config file. Normally on the command line, the target rule is just stated at the end of command by itself with no flag. This cannot be replicated in the config file, so the workaround is to use the `--until` flag. This flag will complete the workflow until the specified target rule.
 - See `run_8.1/config.yaml`. This profile config file uses the until flag to target rule touch. The target can be changed to any rule in the snakefile.
 > Reminder that `snakemake -s 8.1_snakefile -lt` can be used to check possible target rules.
-- Try `snakemake --profile run_8.1`. This will produce the output of the target rule set in the profile config.
+- Try the following command. This will produce the output of the target rule set in the profile config.
+
+    ```sh
+    snakemake --profile run_8.1
+    ```
+
 > Same as running `snakemake -c 1 -s 8.1_snakefile touch`.
 
 Profiles are also able to include conda environment usage. There can be one profile to just create conda environments, and there can be another profile to run the snakefile. This is useful later on in resource management.
@@ -369,7 +438,7 @@ With everything discussed up until this point. You should be able to start creat
 
 - Getting account
 
-## Using Hive as a local computer
+## Using Hive as a remote desktop
 
 Note: All commands will be run on the Hive terminal and not your local computer's terminal for this section.
 
@@ -394,20 +463,19 @@ Clone this github repo in the directory of your choosing make `10_example` the w
 The main method of running scripts on Hive is by submitting a job through a slurm script with the sbatch command. Your active jobs can be seen with by using the following command in the Hive terminal.
 
 ```sh
-squeue -u <username>
+squeue -u $USER
 ```
 
-> Note: `<username>` is a placeholder for your user name on Hive.
 - `-u` flag is for seeing jobs from a particular user, other flags can be seen with the following command used in the terminal.
 
     ```sh
     squeue --help
     ```
 
-- Tip: The following command will allow `squeue -u <username>` to run every second essentially allowing you to keep track of your jobs in real time without having to rerun `squeue`. Use `ctrl + c` to cancel the command.
+- Tip: The following command will allow `squeue -u $USER` to run every second essentially allowing you to keep track of your jobs in real time without having to rerun `squeue`. Use `ctrl + c` to cancel the command.
 
     ```sh
-    watch -n 1 "squeue -u <username>"
+    watch -n 1 "squeue -u $USER"
     ```
 
 Another useful slurm command is `scancel`. This followed by a jobid allows a specific job to be terminated. The different `scancel` options can be viewed with the help page, with the command shown below.
@@ -416,7 +484,7 @@ Another useful slurm command is `scancel`. This followed by a jobid allows a spe
 scancel --help
 ```
 
-Run the following command that will run a slurm script which will result in `hello world` printed to _____.
+Run the following command that will run a slurm script which will result in `hello world` printed to `results/hello.txt`.
 
 ```sh
 sbatch 10.1_ex.slurm
@@ -461,7 +529,6 @@ Submitting a Snakemake job requires a conda environment containing snakemake to 
 In the interactive terminal run the following to download a basic snakemake conda environment for Hive. I am assuming you are in the same directory that contains `snakehive.yaml`.
 
 ```sh
-conda config --set channel_priority strict
 conda env create -f snakehive.yaml --strict-channel-priority
 ```
 
@@ -491,7 +558,7 @@ sbatch 10.2_ex.slurm
 
 ## Importance of resource management
 
-A crucial part of running any workflow on a cluster is resource management. This is important because resources are shared so occupying unused resources prevents fellow researchers from also using the cluster. Additionally, requesting large amount of resources can cause your workflow to be lower on the queue so it can take longer to run. The best solutions to this are requesting the minimum amount needed to run the workflow, and split up larger workflows into smaller jobs.
+A crucial part of running any workflow on a cluster is resource management because resources are shared so occupying unused resources prevents fellow researchers from also using the cluster. Additionally, requesting large amount of resources can cause your workflow to be lower on the queue so it can take longer to run. The best solutions to this are requesting the minimum amount needed to run the workflow, and split up larger workflows into smaller jobs.
 
 ## Testing for minimum resource requirement
 
@@ -535,7 +602,7 @@ sbatch 11.1_ex.slurm
 Check the MaxRss with the following command. Make sure the job state is completed.
 
 ```sh
-sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state
+sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
 ```
 
 The amount of requested memory can be changed in a slurm script so that the script still runs but you are not occupying unused resources.
@@ -544,7 +611,10 @@ The amount of requested memory can be changed in a slurm script so that the scri
 
 The default resources for a job Snakemake submits is separate from the resources that the slurm script that runs the Snakemake program.
 
-The default resources for a Snakemake submitted job is 1 core with 1GB of memory. For the purposes of these examples, the rules will rarely need that much memory, so it is a waste to tie up 1GB of memory when the workflow does not need it.
+The default resources for a Snakemake submitted job is 1 core with 1GB of
+memory. For the purposes of these examples, the rules will rarely need that much
+memory, so it is a waste to tie up 1GB of memory when the workflow does not need
+it.
 
 The way to control the default resources Snakemake is allowed to request is through the `--default-resources` flag. Similar to the existing variables that already exist from the previous examples, there are other variables that control the default resources.
 
@@ -557,19 +627,22 @@ The way to control the default resources Snakemake is allowed to request is thro
 - `mem=200M` is the amount of memory Snakemake will request for a job. In this case, Snakemake is asking for 200MB for every job it request. This number was found by running `11.2_ex.slurm` and checking the amount of memory used with the following command.
 
     ```sh
-    sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state
+    sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
     ```
 
     - Note that Snakemake submitted jobs will have a job name containing a generate string. The best way to identify which jobs are the Snakemake submitted ones are by checking the slurm logs that appear in the `jobs` directory to get the job ID of the Snakemake jobs, or they should appear below the job name `11.2_ex` with a generated job name assuming no other jobs are submitted by you before this one finishes.
 
+## Breaking up larger workflows
+
 show how to control snakemake resources in multiple rules
+
+breaking jobs into multiple rules that snakemake can submit separately
+
+## Automation
 
 show how to automate to run tens at a time one at a time
 
 same as above but at the same time
-
-
-## Breaking up larger workflows
 
 ## maybe conda on hive??
 
