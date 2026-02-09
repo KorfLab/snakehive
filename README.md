@@ -1,6 +1,6 @@
-snakehive
+Snakehive
 =========
-Tutorial and best practices for snakemake and hive
+Tutorial and best practices for Snakemake and Hive
 
 ## Goals ##
 
@@ -8,7 +8,6 @@ Tutorial and best practices for snakemake and hive
 - Examples of progressively more sophisticated snakemake pipelines
 - Changing conda environments
 - With and without slurm jobs
-- Singularity/apptainer
 
 
 ## Pipeline Diagram ##
