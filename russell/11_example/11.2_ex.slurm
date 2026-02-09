@@ -21,6 +21,6 @@ slurm_account=publicgrp \
 runtime=3 \
 slurm_partition=low \
 mem=200M \
-threads=2 \
+cpus=2 \
 --latency-wait 60 \
 --forceall
