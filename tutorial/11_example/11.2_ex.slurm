@@ -15,7 +15,7 @@ conda activate snakehive
 snakemake \
 --jobs 1 \
 --executor slurm \
---snakefile hello_snakefile \
+--snakefile hello.smk \
 --default-resources \
 slurm_account=publicgrp \
 runtime=3 \

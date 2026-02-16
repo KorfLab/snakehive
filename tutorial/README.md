@@ -644,6 +644,8 @@ The way to control the default resources Snakemake is allowed to request is thro
 
 One of the biggest features of Snakemake is being able to have different resources for different parts of the workflow while still being able to run the whole workflow at once. This is why using the default resources to control the resources that Snakemake can request for a job should be used as a backup for when Snakemake rules do not contain their own specified resources.
 
+The resource directive in rules can be used to specify resources
+
 show how to control snakemake resources in multiple rules
 
 breaking jobs into multiple rules that snakemake can submit separately
