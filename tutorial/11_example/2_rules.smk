@@ -22,7 +22,7 @@ rule search:
         'results/ATG.txt'
     threads: 1
     resources:
-        mem_mb=500,
+        mem_m=500M,
         runtime=3
     shell:
         'zgrep ATG {input} -c > {output}'
