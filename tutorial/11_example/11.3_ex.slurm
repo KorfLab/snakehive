@@ -14,4 +14,3 @@ conda activate snakehive
 
 snakemake -j 1 -s 2_rules.smk --latency-wait=60 --executor slurm \
 --default-resources slurm_account=publicgrp runtime=5 slurm_partition=low \
-mem=1000M
