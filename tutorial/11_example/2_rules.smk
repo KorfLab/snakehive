@@ -10,7 +10,7 @@ rule echo:
         'results/echo.txt'
     threads: 1
     resources:
-        mem=500M
+        mem_mb=500
     shell:
         'echo "this is the input file: {input}" > {output}'
 
@@ -21,6 +21,6 @@ rule search:
         'results/ATG.txt'
     threads: 1
     resources:
-        mem=500M
+        mem_mb=500
     shell:
-        'zgrep ATG {input} > {output}'
+        'zgrep ATG {input} -c > {output}'
