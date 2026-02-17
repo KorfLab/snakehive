@@ -10,7 +10,7 @@ rule echo:
         'results/echo.txt'
     threads: 1
     resources:
-        mem_mb=100,
+        mem_mb=150,
         runtime=2
     shell:
         'echo "this is the input file: {input}" > {output}'
