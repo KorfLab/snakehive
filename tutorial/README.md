@@ -624,10 +624,10 @@ The way to control the default resources Snakemake is allowed to request is thro
 
 - `slurm_partition=low` not essential but should be used. This sets the priority of the job. In this case, the parition is set to low.
 
-- `mem=200M` is the amount of memory Snakemake will request for a job. In this
-  case, Snakemake is asking for 200MB for every job it request. This number was
-  found by running `11.2_ex.slurm` and checking the amount of memory used with
-  the following command.
+- `mem_mb=200` is the amount of memory Snakemake will request for a job. In
+this case, Snakemake is asking for 200MB for every job it request. This number 
+was found by running `11.2_ex.slurm` and checking the amount of memory used 
+with the following command.
 
     ```sh
     sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
