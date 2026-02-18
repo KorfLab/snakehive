@@ -3,7 +3,7 @@ rule search:
         '1pct.fa.gz'
     output:
         'results/search.txt'
-    threads: 1
+    threads: 2
     resources:
         mem_mb=200,
         runtime=2
