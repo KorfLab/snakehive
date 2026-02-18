@@ -12,6 +12,6 @@ source /etc/profile
 module load conda
 conda activate snakehive
 
-snakemake -j 1 -s search.smk --latency-wait=60 --executor slurm \
+snakemake -j 5 -s search.smk --latency-wait=60 --executor slurm \
 --default-resources slurm_account=publicgrp runtime=5 slurm_partition=low \
 mem_mb=750 --forceall
