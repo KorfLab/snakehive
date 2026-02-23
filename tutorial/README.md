@@ -644,7 +644,10 @@ with the following command.
 
 One of the biggest features of Snakemake is being able to have different resources for different parts of the workflow while still being able to run the whole workflow at once. This is why using the default resources to control the resources that Snakemake can request for a job should be used as a backup for when Snakemake rules do not contain their own specified resources.
 
-The resource directive in rules can be used to specify resources
+The `resources` directive along with the `threads` directive in rules can be used to specify resources the rule needs to run. The `resources` directive allows the memory and runtime to be specified. Memory is specified through the `mem_mb` variable. This variable takes an integer and specifies how much memory the rule should use in mega bytes. Runtime is specified through the `runtime` variable. This variable takes an integer and specifies the maximum amount time the rule should use in minutes. The `threads` directive specifies the number of cores the rule should use. More detail later on.
+
+- See `file.smk`. Under the resources directive and on the mem_mb variable, 175 says this rule should only request 175MB of memory.
+- See `file.smk`. Under the resources directive and on the runtime variable, 2 says the rule should request 2 minutes of time.
 
 show how to control snakemake resources in multiple rules
 

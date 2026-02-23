@@ -15,7 +15,7 @@ rule echo:
     shell:
         'echo "this is the input file: {input}" > {output}'
 
-rule search:
+rule ATG:
     input:
         '1pct.fa.gz'
     output:
