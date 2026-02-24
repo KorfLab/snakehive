@@ -644,14 +644,74 @@ with the following command.
 
 One of the biggest features of Snakemake is being able to have different resources for different parts of the workflow while still being able to run the whole workflow at once. This is why using the default resources to control the resources that Snakemake can request for a job should be used as a backup for when Snakemake rules do not contain their own specified resources.
 
+### Controlling resources on a per rule basis
+
 The `resources` directive along with the `threads` directive in rules can be used to specify resources the rule needs to run. The `resources` directive allows the memory and runtime to be specified. Memory is specified through the `mem_mb` variable. This variable takes an integer and specifies how much memory the rule should use in mega bytes. Runtime is specified through the `runtime` variable. This variable takes an integer and specifies the maximum amount time the rule should use in minutes. The `threads` directive specifies the number of cores the rule should use. More detail later on.
 
 - See `file.smk`. Under the resources directive and on the mem_mb variable, 175 says this rule should only request 175MB of memory.
 - See `file.smk`. Under the resources directive and on the runtime variable, 2 says the rule should request 2 minutes of time.
 
-show how to control snakemake resources in multiple rules
+Run the following commands. The commands run a slurm script that allows Snakemake to run file.smk.
 
-breaking jobs into multiple rules that snakemake can submit separately
+```sh
+sbatch 11.3_ex.slurm
+```
+
+After this finishes, run this to see the resources it requested and used.
+
+```sh
+sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
+```
+
+Notice how the resources that Snakemake requests to run file.smk are the resources specified in the rule and not the default resources.
+
+This type of rule level control is what makes Snakemake a great tool to use for a workflow. Different rules can have different resource requirements. `2_rules.smk` has two different rules that each have their own specified requirements. Snakemake will submit these rules as individual jobs and request different resources.
+
+Run the following command and see how Snakemake will submit each rule as separate jobs.
+
+```sh
+sbatch 11.4_ex.slurm
+```
+
+Run this command after the previous one has finished to see the jobs submitted today by yourself and the resources used.
+
+```sh
+sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
+```
+
+Notice how with one run of the slurm script, Snakemake was able to submit two separate jobs each with their own specified resources.
+
+### Threads and the job flag
+
+The number of cpus Snakemake can request is based on the `threads` directive in a rule and the number specified in the `--jobs` flag when running Snakemake initially. Snakemake will always request cpus based on the lowest value of these two.
+
+Run the follow command and see how Snakemake requests 2 cpus even when the initially submitted slurm script only runs with one.
+
+```sh
+sbatch 11.5_ex.slurm
+```
+
+The following command is run after the previous has finished to see the jobs submitted and the resources.
+
+```sh
+sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
+```
+
+- As a side note, more cpus make this rule faster it is for demonstration purposes.
+
+The commands for the rest this subsection is intended to for you to see Snakemake submit jobs in real time. Run this command on a different terminal to see jobs you submit in real time.
+
+```sh
+watch -n 1 "squeue -u $USER
+```
+
+Snakemake is also able to submit multiple jobs at the same time and have them all run, as long as the cluster allows it. This is useful for splitting larger workflows up so that they can finish without a different job taking priority of the resources. Splitting larger workflows also allow them to run quicker. This ablility is managed by changing the number attached to the job flag. The way the job flag works is by specifying how many cores Snakemake is allowed to request at a time. So having `--jobs 10` means that Snakemake is allowed to submit ten 1 thread jobs or two 5 thread jobs.
+
+In the following command, it will run the `2_rules.smk` again but it will run both rules at the same time instead of one after another.
+
+```sh
+sbatch 11.6_ex.slurm
+```
 
 ## Automation
 
