@@ -1,7 +1,7 @@
 #!/bin/bash
 
 declare -a jid
-num_trials=10
+num_trials=5
 script="run_file.slurm"
 
 for ((num=1; num<=num_trials; num++)); do

@@ -582,7 +582,7 @@ squeue -u $USER
 One tip for using squeue is that you can run the following command on a separate terminal. This will rerun the `squeue` command every second automatically giving you live updates on the jobs running under your username.
 
 ```sh
-watch -n 1 "squeue -u $USER
+watch -n 1 "squeue -u $USER"
 ```
 
 The first thing you want to look for is to make sure the job state says completed. Then the maximum memory used can be seen with the follow command. You are looking first for the JobName of `11.0_ex`. Under that name, `batch` will be the sub job that actually uses the resources and that can be seen under the `MaxRss` column. Another way to identify the maximum memory used for a job is to look at the JobID. The `<jobid>.bat+` JobID will be the one that actually uses the resources.
@@ -702,7 +702,7 @@ sacct -u $USER -S today --format=jobid,jobname,maxrss,reqmem,state,alloccpus
 The commands for the rest this subsection is intended to for you to see Snakemake submit jobs in real time. Run this command on a different terminal to see jobs you submit in real time.
 
 ```sh
-watch -n 1 "squeue -u $USER
+watch -n 1 "squeue -u $USER"
 ```
 
 Snakemake is also able to submit multiple jobs at the same time and have them all run, as long as the cluster allows it. This is useful for splitting larger workflows up so that they can finish without a different job taking priority of the resources. Splitting larger workflows also allow them to run quicker. This ablility is managed by changing the number attached to the job flag. The way the job flag works is by specifying how many cores Snakemake is allowed to request at a time. So having `--jobs 10` means that Snakemake is allowed to submit ten 1 thread jobs or two 5 thread jobs.
@@ -715,9 +715,31 @@ sbatch 11.6_ex.slurm
 
 ## Automation
 
-show how to automate to run tens at a time one at a time
+There are many ways to automate the process of finding the right amount of resources for a rule in a workflow. Whichever creative way you choose to automate this process, you have to keep in mind the the amount of memory used will change every single time when running it on the cluster.
 
-same as above but at the same time
+My perfered method to somewhat automate this process is by running the rules once to get a general idea about how much memory, using the more than the estimate, and lowering the resources until the workflow has just as much as it needs to complete successfully. The part I automate is the end where it runs the workflow dozens of times to check for failure. 
+
+The reason I choose to only automate the end to check is for simplicity. The code is simiple and this method works for all the workflows in this tutorial.
+
+See `11.7_ex.sh`. This shell script has two variables that are meant to be changed. The way that script works is that it run the workflow a number of times one after another after the previous on has completed.
+
+- `num_trials` controls how many times to run the workflow. 
+- `script` is the slurm script that runs the workflow. It is important that there is some way for the workflow either bypass the fact that outputs exists already or a way to delete the outputs after each run so that the workflow can run properly. In most of these scripts, `--forceall` is used to force the workflows to run.
+- Line 7 is the loop where is `num` starts at 1 and increments by 1.
+- Line 8-9 runs the slurm script on the first iteration of the loop. When the script is submitted through `sbatch`, the `--parsable` flag is used so that the job id for can be saved into an array.
+- Line 10-12 runs all the iterations that is not the first one. What is does is it used the `--dependency` flag to run only run the next job when the previous one has completed. It does this by waiting for the previous job id to finish.
+
+Try this automation by running this command first on a separate window. This will allow you to see all jobs being queued.
+
+```sh
+watch -n 1 "squeue -u $USER"
+```
+
+Now run this command and see how it queues up all the jobs at once but only runs them after the previous one has completed
+
+```sh
+bash 11.7_ex.sh
+```
 
 ## maybe conda on hive??
 
