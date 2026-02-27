@@ -741,7 +741,9 @@ Now run this command and see how it queues up all the jobs at once but only runs
 bash 11.7_ex.sh
 ```
 
-## maybe conda on hive??
+## Conda resources on Hive
+
+Similarly to running conda in Snakemake locally, conda in Snakemake on Hive needs first installs all conda environments before running the workflow. NO MATTER HOW MANY ENVIRONMENTS AND THE SIZE OF THE WORKFLOW, SNAKEMAKE WILL USE 2500 MB OF RAM TO BUILD ALL THE ENVIRONMENTS. Additionally, conda environment installation takes some time to happen. The best way to account for this is to build all the conda environments separately from the workflow by using 
 
 # 12_example: Conda in Snakemake on Hive
 
