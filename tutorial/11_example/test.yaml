@@ -1,0 +1,13 @@
+name: test
+
+channels:
+  - conda-forge
+  - bioconda
+
+dependencies:
+ - blast
+ - snakemake
+ - time
+ - samtools
+ - python
+ - matplotlib
