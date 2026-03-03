@@ -5,9 +5,29 @@ channels:
   - bioconda
 
 dependencies:
- - blast
- - snakemake
- - time
- - samtools
- - python
- - matplotlib
+  # Core Python
+  - python=3.11
+  - pip
+
+  # Data science stack
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+
+  # Bioinformatics tools
+  - snakemake
+  - samtools
+  - bwa
+  - bedtools
+  - fastqc
+
+  # System / utility packages
+  - curl
+  - wget
+
+  # Pip-only packages
+  - pip:
+      - requests
+      - rich
