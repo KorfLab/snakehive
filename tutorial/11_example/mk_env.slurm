@@ -5,7 +5,7 @@
 #SBATCH --output=jobs/%j/%x.out
 #SBATCH --err=jobs/%j/%x.err
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=4000MB
+#SBATCH --mem=10000MB
 #SBATCH --time=15:00
 
 source /etc/profile
