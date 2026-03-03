@@ -3,31 +3,58 @@ name: test
 channels:
   - conda-forge
   - bioconda
+  - defaults
+  - nvidia
 
 dependencies:
-  # Core Python
+  # Python core
   - python=3.11
   - pip
 
-  # Data science stack
+  # Scientific stack (compiled libs)
   - numpy
-  - pandas
   - scipy
-  - matplotlib
-  - seaborn
+  - pandas
+  - scikit-learn
+  - numba
+  - pytables
+  - hdf5
+  - xarray
+  - dask
+  - dask-jobqueue
 
-  # Bioinformatics tools
+  # GPU / deep learning (large downloads)
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cudatoolkit
+
+  # Bioinformatics tools (compiled, heavy deps)
   - snakemake
   - samtools
+  - bcftools
   - bwa
-  - bedtools
-  - fastqc
+  - hisat2
+  - star
+  - salmon
+  - kallisto
+  - gatk4
 
-  # System / utility packages
+  # R + Bioconductor (very dependency-heavy)
+  - r-base
+  - r-tidyverse
+  - bioconductor-deseq2
+  - bioconductor-edger
+  - bioconductor-limma
+
+  # Utilities
+  - graphviz
+  - openjdk
   - curl
   - wget
 
-  # Pip-only packages
   - pip:
-      - requests
-      - rich
+      - jupyterlab
+      - notebook
+      - plotly
+      - scanpy
