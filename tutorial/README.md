@@ -743,11 +743,12 @@ bash 11.7_ex.sh
 
 ## Conda resources on Hive
 
-Similarly to running conda in Snakemake locally, conda in Snakemake on Hive needs first installs all conda environments before running the workflow. NO MATTER HOW MANY ENVIRONMENTS AND THE SIZE OF THE WORKFLOW, SNAKEMAKE WILL USE 2500 MB OF RAM TO BUILD ALL THE ENVIRONMENTS. Additionally, conda environment installation takes some time to happen. The best way to account for this is to build all the conda environments separately from the workflow by using 
+Similarly to running conda in Snakemake locally, conda in Snakemake on Hive needs first installs all conda environments before running the workflow. Generally, it takes a minimum of 2500MB of memory to download just the conda environments for a Snakemake workflow. This can be used a baseline for figuring out how much resources downloading the conda environments will take. The resources it uses are specified in the slurm script and is not the resources specified in rules. So this memory minimum might be way more than is needed to run the slurm script. This results in wasted resources that are not used after the conda environments have been installed. The best way to account for this is to build all the conda environments separately from the workflow by using the `--conda-create-envs-only` flag in the slurm script with the Snakemake command.
 
-# 12_example: Conda in Snakemake on Hive
+- See `11.8_ex.slurm`. This is an example of a slurm script that will download only the conda environments first. Notice how the memory requested is 2500MB.
+    - Note: This script will not run and its purpose is for demonstration only.
 
-# 13_example: Slurm Profiles
+# 12_example: Slurm Profiles
 
 # 14_example: More Example Workflows
 
