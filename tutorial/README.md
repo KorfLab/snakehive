@@ -758,7 +758,11 @@ Similarly to running conda in Snakemake locally, conda in Snakemake on Hive need
 
 As stated in previous examples, profiles allow for all Snakemake options to be put in a separate yaml file. This helps with clarity and organization.
 
-You might be asking what is the purpose of using profiles when running slurm scripts because the options can be organized within the slurm script. The two main reasons is formatting and organization. The format of a yaml file is much cleaner to read and look at versus having all the options as part of the slurm command.
+You might be asking what is the purpose of using profiles when running slurm scripts because the options can be organized within the slurm script. The two main reasons is formatting and organization.
+
+The format of a yaml file is much cleaner to read and look at versus having all the options as part of the slurm command. This can be seen in the in `12.0_ex.slurm`, `12.1_ex.slurm`, and `12.1_profile/config.yaml`. In 12.0, all the options are laid out with and the command is more difficult to follow. Whereas, 12.1 has the command neatly in the slurm script, and all the options are formatted so they are easy to read in the profile. The yaml formatting also makes it easy to make changes when needed.
+
+Profiles also help with organizations because it easy to have separate options for different jobs. One great example of this involves downloading conda environments separate from running the workflow.
 
 # 13_example: More Example Workflows
 

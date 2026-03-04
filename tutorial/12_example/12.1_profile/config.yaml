@@ -3,8 +3,8 @@ snakefile: file.smk
 latency-wait: 60
 executor: slurm
 default-resources:
-  slurm_account: "publicgrp"
+  slurm_account: publicgrp
   runtime: 5
-  slurm_partition: "low"
+  slurm_partition: low
   mem_mb: 750
 forceall: true

@@ -1,0 +1,4 @@
+jobs: 1
+use-conda: true
+conda-create-envs-only: true
+snakefile: conda.smk
