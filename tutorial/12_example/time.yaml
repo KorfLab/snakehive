@@ -1,0 +1,7 @@
+name: time
+
+channels:
+  - conda-forge
+
+dependencies:
+  - time
