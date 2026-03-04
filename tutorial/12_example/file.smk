@@ -5,7 +5,7 @@ rule file:
         'results/file.txt'
     threads: 1
     resources:
-        mem_mb=175,
+        mem_mb=200,
         runtime=2
     shell:
         'echo {input} > {output}'
