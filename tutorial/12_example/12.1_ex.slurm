@@ -12,4 +12,4 @@ source /etc/profile
 module load conda
 conda activate snakehive
 
-snakemake --profile 12.1_profile --forceall
+snakemake --profile 12.1_profile

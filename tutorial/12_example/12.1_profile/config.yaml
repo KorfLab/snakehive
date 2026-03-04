@@ -7,3 +7,4 @@ default-resources:
   runtime: 5
   slurm_partition: "low"
   mem_mb: 750
+forceall: true
