@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=12.2_ex
+#SBATCH --job-name=mk_conda
 #SBATCH --account=publicgrp
 #SBATCH --partition=low
 #SBATCH --output=jobs/%j/%x.out

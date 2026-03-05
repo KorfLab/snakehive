@@ -762,7 +762,10 @@ You might be asking what is the purpose of using profiles when running slurm scr
 
 The format of a yaml file is much cleaner to read and look at versus having all the options as part of the slurm command. This can be seen in the in `12.0_ex.slurm`, `12.1_ex.slurm`, and `12.1_profile/config.yaml`. In 12.0, all the options are laid out with and the command is more difficult to follow. Whereas, 12.1 has the command neatly in the slurm script, and all the options are formatted so they are easy to read in the profile. The yaml formatting also makes it easy to make changes when needed.
 
-Profiles also help with organizations because it easy to have separate options for different jobs. One great example of this involves downloading conda environments separate from running the workflow.
+Profiles also help with organizations because it easy to have separate options for different jobs. One great example of this involves downloading conda environments separate from running the workflow. In 12.2, the conda environment downloaded and nothing else is run. In 12.3, the workflow is run after the conda environment has already been installed. Notice how the commands for both are similiar. The only difference is which profile it calls for. When you look into `12.2_profile` and `12.3_profile`, the config files for each of those are very different. The separation of the command and the options make it easier for users to read the slurm file and know what command is being run without having to look at the entire command. This also allows users to dive deeper into the code as they see fit.
+
+Something fun about profiles is that it allows you to run a batch script that automates the creation of the conda environments and the running of the workflow while keeping organized.
+- See 12.4_ex.sh
 
 # 13_example: More Example Workflows
 
