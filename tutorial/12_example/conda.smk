@@ -3,7 +3,7 @@ rule conda:
         'results/conda.txt'
     threads: 1
     resources:
-        mem_mb=200,
+        mem_mb=250,
         runtime=2
     conda:
         'time.yaml'

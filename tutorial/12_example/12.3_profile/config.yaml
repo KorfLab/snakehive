@@ -9,4 +9,3 @@ default-resources:
   slurm_partition: low
   mem_mb: 750
 forceall: true
-slurm-keep-successful-logs: true
