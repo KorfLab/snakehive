@@ -1,6 +1,10 @@
 rule conda:
     output:
         'results/conda.txt'
+    threads: 1
+    resources:
+        mem_mb=200,
+        runtime=2
     conda:
         'time.yaml'
     shell:

@@ -1,0 +1,11 @@
+jobs: 1
+use-conda: true
+snakefile: conda.smk
+latency-wait: 60
+executor: slurm
+default-resources:
+  slurm_account: publicgrp
+  runtime: 5
+  slurm_partition: low
+  mem_mb: 750
+forceall: true
