@@ -764,12 +764,14 @@ The format of a yaml file is much cleaner to read and look at versus having all 
 
 Profiles also help with organizations because it easy to have separate options for different jobs. One great example of this involves downloading conda environments separate from running the workflow. In 12.2, the conda environment downloaded and nothing else is run. In 12.3, the workflow is run after the conda environment has already been installed. Notice how the commands for both are similiar. The only difference is which profile it calls for. When you look into `12.2_profile` and `12.3_profile`, the config files for each of those are very different. The separation of the command and the options make it easier for users to read the slurm file and know what command is being run without having to look at the entire command. This also allows users to dive deeper into the code as they see fit.
 
-Something fun about profiles is that it allows you to run a batch script that automates the creation of the conda environments and the running of the workflow while keeping organized.
-- See 12.4_ex.sh
+Something fun about profiles is that it allows you to run a batch script that automates the creation of the conda environments and the running of the workflow while keeping organized. This has the best of both worlds because the entire workflow can be run with one commmand and the resources used are minimum.
+- See `12.4_ex.sh`. This script creates a conda environment and also run the workflow after the environment is created. Essentially, it combines `12.2_ex.slurm` and `12.3_ex.slurm`.
 
 # 13_example: More Example Workflows
 
+## Goals:
 
+- Gives some example workflows that follow best practices
 
 
 
