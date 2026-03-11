@@ -754,7 +754,7 @@ Similarly to running conda in Snakemake locally, conda in Snakemake on Hive need
 
 - Explore how profiles can be used in slurm scripts
 
-##
+## Usefulness of Profiles in Slurm 
 
 As stated in previous examples, profiles allow for all Snakemake options to be put in a separate yaml file. This helps with clarity and organization.
 
@@ -773,7 +773,95 @@ Something fun about profiles is that it allows you to run a batch script that au
 
 - Gives some example workflows that follow best practices
 
+## Precursor (need better title)
 
+These examples are meant to show different workflows that get more complicated. All these examples are supposed to follow best practices for Snakemake. 
+
+## local_example
+
+This is an example Snakemake workflow that is designed to run locally. The first step to running this command is make sure you are in the conda environment named `Snakemake`. This is the environment made from `basic.yaml`. The whole workflow can be run with the following command.
+
+```sh
+snakemake --profiles local
+```
+
+Normally, workflows that use conda environments have a profile that just downloads the environments so to minimize resources usage, but this is not an issue when running locally because the resources are not shared and are only your own.
+
+### config
+
+This folder contains `config.yaml`. Normally, this file will contain all the parameters for workflow, but this workflow does not use any configs so the file will just be empty. A side note is that the config file inside of this folder does not need to be named `config.yaml`. It can be named whatever you see fit.
+
+### local
+
+This is a profile that also contains `config.yaml` not to be confused with `config/config.yaml`. Profiles must have `config.yaml` inside of them as that is the file that Snakemake is looking for when using profiles. The file contains only `cores` and `use-conda` because it is a local run and the workflow uses a conda environment. This profile effectively translates to the command below.
+
+```sh
+snakemake -c 1 --use-conda
+```
+
+### resources
+
+The best way to think about this folder is the input folder. This is where all the inputs for the workflow should go.
+
+In this case, all the files needed are generated within the workflow, and this is why this folder is empty.
+
+### results
+
+In contrast with the resources folder, the results folder is the output of the workflow. This is where the desired output files will go.
+
+When a file is both desired as an output and used as an input for another step of the workflow, it is best for that file to be put into the results folder because it is easiest to have one folder with all the files you want to look at.
+
+### test
+
+This is a profile that is intended to test the workflow. It does this by using `forceall` and making the workflow run even if the output files are present.
+
+### workflow
+
+This is where the bulk of the workflow will be. This is not meant for users to change or modify. Controlling the workflow should be done with the config files.
+
+#### envs
+
+This contains all the conda environements that are used in the workflow (change names of rules)
+
+## Goal
+
+- Show example of what a basic Snakemake pipeline looks like
+- Use best practices when writing a pipeline
+- Run Snakemake locally
+
+## Explanation of Snakefile
+
+`configfile` is specifies the global config file for this Snakefile. It can be called on by using the variable `config` (no quotes), or it can be called on in scripts using `Snakemake.config`. Specific configs can be called on with this syntax `config['<some_variable>']`.
+
+`rule all` should be the first rule in any Snakefile. It is the default rule that Snakemake looks for as its target rule.
+- Target rule is the rule that specifies the intended output for the whole Snakefile.
+
+`module` loads in a snakefile of rule/s that is from somewhere outside of this Snakefile. For best practices all snakefiles loaded in with module must have the `.smk` extension. This will make it clear what kind of file it is just by the name. Modules need to contain a `config` directive if the rule that the module runs uses a script. When running shell commands, there does not need to be a `config` directive. `config` directive should also be used when referencing a config inside of a rule.
+
+`use rule * from <module>` tells Snakemake to use all rules from a specific module. The rule that is used can be customized and does not have to be `*`.
+
+### Explanation of Snakemake Rules
+
+All rules with the exception of `rule all` should contain these directives:
+- output
+- log
+- conda
+
+`output` is needed so that the rule produces something.
+
+`log` is used to specify the names and/or paths of log files. This directive should contain `stdout` and `stderr` and have the file extentions `.out` and `.err` respectively. Separating standard output and standard error allows each to be differentiated easier without having to tag each output in a single file.
+
+`conda` is used to specify a yaml file containing instructions for a conda environment. Depending on the purpose of the Snakefile, this should either be set per file or per rule. Setting a conda environment helps with reproducibility.
+
+`shell` is used to run shell commands.
+
+### Explanation of Snakemake Scripts
+
+Snakemake can take either python or R scripts. For python scripts, variables in the rule that script is run in can be accessed with `Snakemake.<directive>[0]`. This is refering to the first variable or string in a directive.
+
+Scripts can also be run in the shell directive. They would run like they would normally on the command line. In `mk_input.smk` rule, `mk_input.py` is called on and arguments are passed with sys.argv.
+
+Either method of using a script in Snakemake is fine. However, running a script by passing arguments in the with the shell directive is more favorable because it allows to script to be used independently from the workflow.
 
 work in progress
 --------------------------------------------------------------

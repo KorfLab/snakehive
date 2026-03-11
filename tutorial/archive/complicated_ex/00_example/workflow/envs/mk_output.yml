@@ -1,9 +1,0 @@
-name: mk_output
-
-channels:
-- bioconda
-- conda-forge
-
-dependencies:
-- samtools
-- time
