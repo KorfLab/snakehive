@@ -789,7 +789,7 @@ Normally, workflows that use conda environments have a profile that just downloa
 
 ### config
 
-This folder contains `config.yaml`. Normally, this file will contain all the parameters for workflow, but this workflow does not use any configs so the file will just be empty. A side note is that the config file inside of this folder does not need to be named `config.yaml`. It can be named whatever you see fit.
+This folder contains `config.yaml`. This file will contain all the parameters for workflow. In this workflow, the configs inside are just used to control the names of different files. A side note is that the config file inside of this folder does not need to be named `config.yaml`. It can be named whatever you see fit.
 
 ### local
 
@@ -821,47 +821,33 @@ This is where the bulk of the workflow will be. This is not meant for users to c
 
 #### envs
 
-This contains all the conda environements that are used in the workflow (change names of rules)
+This contains all the conda environements that are used in the workflow. Both environments use time so that to measure the resources used by the rule. `mk_sam.yaml` has python because that is what generates the the sam file. `mk_bam.yaml` has samtools because this is used to convert sam files to bam files.
 
-## Goal
+### logs
 
-- Show example of what a basic Snakemake pipeline looks like
-- Use best practices when writing a pipeline
-- Run Snakemake locally
+This is where the logs of the each rule is directed. The log folder is meant to be used for troubleshooting and development. That is why this lives as a separate folder inside of `worflow` and not put into the result folder.
 
-## Explanation of Snakefile
+### rules
 
-`configfile` is specifies the global config file for this Snakefile. It can be called on by using the variable `config` (no quotes), or it can be called on in scripts using `Snakemake.config`. Specific configs can be called on with this syntax `config['<some_variable>']`.
+This folder houses all the rules that is used in the workflow. These rules are then used on the master Snakefile.
 
-`rule all` should be the first rule in any Snakefile. It is the default rule that Snakemake looks for as its target rule.
-- Target rule is the rule that specifies the intended output for the whole Snakefile.
+`mk_bam.smk` converts a sam file to a bam file using samtools. It references the file names specified in the config file. This allows for the names of files to be changed by a user without them going into the workflow.
 
-`module` loads in a snakefile of rule/s that is from somewhere outside of this Snakefile. For best practices all snakefiles loaded in with module must have the `.smk` extension. This will make it clear what kind of file it is just by the name. Modules need to contain a `config` directive if the rule that the module runs uses a script. When running shell commands, there does not need to be a `config` directive. `config` directive should also be used when referencing a config inside of a rule.
+`mk_sam.smk` runs a python script, that creates a sam file. This also accesses the sam file name from the config file to allow for easy customizability.
 
-`use rule * from <module>` tells Snakemake to use all rules from a specific module. The rule that is used can be customized and does not have to be `*`.
+### scripts
 
-### Explanation of Snakemake Rules
+The only script this workflow uses is `mk_sam.py`. This script is written so it takes the arguments of the command and uses them to create a sam file and log the run of the script. This script uses `sys` versus using `snakemake` and its built in functions because `sys` allows the script to be used outside of snakemake. This is useful for testing and making it compatible with other workflows.
 
-All rules with the exception of `rule all` should contain these directives:
-- output
-- log
-- conda
+### Snakefile
 
-`output` is needed so that the rule produces something.
+This is the master file for the workflow. Snakemake will look at this file first when it runs. The first thing to do is to specify the config file so that all the rules and the snakefile can access the config. `rule all` is used to specify the desire output for the workflow. Then all the rules that are used are loaded in through modules.
 
-`log` is used to specify the names and/or paths of log files. This directive should contain `stdout` and `stderr` and have the file extentions `.out` and `.err` respectively. Separating standard output and standard error allows each to be differentiated easier without having to tag each output in a single file.
+There are two different ways to use rules from a different file. The first is to use `include`. This loads all the rules into the main snakefile as if it was part of the main file. The other method is to use `module`. This uses rules from the other files and allows for more control. Using `module` in complicated workflows allows the rules to work without conflict and allows for finer control over which rules from a file.
 
-`conda` is used to specify a yaml file containing instructions for a conda environment. Depending on the purpose of the Snakefile, this should either be set per file or per rule. Setting a conda environment helps with reproducibility.
+`module` is used in this example but is not necessary for simple workflows like this. It is used here to showcase the syntax.
 
-`shell` is used to run shell commands.
-
-### Explanation of Snakemake Scripts
-
-Snakemake can take either python or R scripts. For python scripts, variables in the rule that script is run in can be accessed with `Snakemake.<directive>[0]`. This is refering to the first variable or string in a directive.
-
-Scripts can also be run in the shell directive. They would run like they would normally on the command line. In `mk_input.smk` rule, `mk_input.py` is called on and arguments are passed with sys.argv.
-
-Either method of using a script in Snakemake is fine. However, running a script by passing arguments in the with the shell directive is more favorable because it allows to script to be used independently from the workflow.
+The last thing to note is the how the config file is loaded into a module. `config: config` specifies that the config for this module can be found with the config variable. The config variable stores the configs specified in the beginning of the Snakefile.
 
 work in progress
 --------------------------------------------------------------

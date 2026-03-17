@@ -2,17 +2,19 @@ configfile: 'config/config.yaml'
 
 rule all:
     input:
-        'results/00_output.bam'
+        f'results/{config['bam_name']}'
 
-module mk_input:
+module mk_sam:
     snakefile:
-        'rules/mk_input.smk'
+        'rules/mk_sam.smk'
     config:
         config
 
-module mk_output:
+module mk_bam:
     snakefile:
-        'rules/mk_output.smk'
+        'rules/mk_bam.smk'
+    config:
+        config
 
-use rule * from mk_input
-use rule * from mk_output
+use rule * from mk_sam
+use rule * from mk_bam
