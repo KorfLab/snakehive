@@ -1,0 +1,20 @@
+configfile: 'config/config.yaml'
+
+rule all:
+    input:
+        f'results/{config['bam_name']}'
+
+module mk_sam:
+    snakefile:
+        'rules/mk_sam.smk'
+    config:
+        config
+
+module mk_bam:
+    snakefile:
+        'rules/mk_bam.smk'
+    config:
+        config
+
+use rule * from mk_sam
+use rule * from mk_bam

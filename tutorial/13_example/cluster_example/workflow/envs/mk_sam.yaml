@@ -1,8 +1,8 @@
 name: mk_input
 
 channels:
-- bioconda
 - conda-forge
+- bioconda
 
 dependencies:
 - python

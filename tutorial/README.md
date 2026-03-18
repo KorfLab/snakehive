@@ -849,6 +849,36 @@ There are two different ways to use rules from a different file. The first is to
 
 The last thing to note is the how the config file is loaded into a module. `config: config` specifies that the config for this module can be found with the config variable. The config variable stores the configs specified in the beginning of the Snakefile.
 
+
+
+# 01_example
+
+## Goal
+
+- Show how Snakemake interacts with slurm
+- Adhere to best practices by finding the minimum required resources for a job
+
+## Explanation of Slurm Directory
+
+The cleanest way to run Snakemake is to use profiles since they allow for the desired Snakemake options to be neatly put into a yaml file. When running Snakemake as a job in hive, specifying `jobs` instead of `cores` is needed because using `cores` will run Snakemake locally instead of on the cluster.
+
+In order to run each rule separately, Snakemake automatically creates and submits its own jobscripts to the cluster. This will allow Snakemake to submit a unique job to the cluster for each rule. This process is important because it allows each rule to run with its own resources. So one rule can use more resources when a different rule can use less.
+
+## sbatch script
+
+There are two sbatch scripts that run Snakemake `01_run.slurm` and `test/test.slurm`. The only difference between the two is that `test.slurm` is used to test the entire workflow from start to finish.
+- `test.slurm` will recreate all conda environments and rerun all the rules.
+- `01_run.slurm` is what you would see in a functioning workflow. It will only create conda environments if needed and only run rules as needed.
+
+## Memory usage finder
+
+It is good practice to only request resources as needed. Requesting too much waste resources that someone else can use, and requesting too little kills the job. It is always recommended to find the maximum amount of resources the job and each rule takes.
+
+`test/run_checker.sh` and `test/get_mem.slurm` are used to submit multiple of the same jobs and collect the maximum about of memory used by Snakemake.
+
+The memory and time used by each job can be obtained by running `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>`.
+
+
 work in progress
 --------------------------------------------------------------
 # Template
@@ -896,48 +926,6 @@ work in progress
 - `default-resources` allows for the jobs that Snakemake submit to be customized.
 
 - `slurm-keep-successful-logs` and `slurm-logdir` allow for the logs from each Snakemake job submission to be kept, and gives it a place to be sent to. Without `slurm-logdir`, the logs will be sent to `.Snakemake/slurm_logs`.
-
-# 00_example
-
-## Goal
-
-- Show example of what a basic Snakemake pipeline looks like
-- Use best practices when writing a pipeline
-- Run Snakemake locally
-
-## Explanation of Snakefile
-
-`configfile` is specifies the global config file for this Snakefile. It can be called on by using the variable `config` (no quotes), or it can be called on in scripts using `Snakemake.config`. Specific configs can be called on with this syntax `config['<some_variable>']`.
-
-`rule all` should be the first rule in any Snakefile. It is the default rule that Snakemake looks for as its target rule.
-- Target rule is the rule that specifies the intended output for the whole Snakefile.
-
-`module` loads in a snakefile of rule/s that is from somewhere outside of this Snakefile. For best practices all snakefiles loaded in with module must have the `.smk` extension. This will make it clear what kind of file it is just by the name. Modules need to contain a `config` directive if the rule that the module runs uses a script. When running shell commands, there does not need to be a `config` directive. `config` directive should also be used when referencing a config inside of a rule.
-
-`use rule * from <module>` tells Snakemake to use all rules from a specific module. The rule that is used can be customized and does not have to be `*`.
-
-### Explanation of Snakemake Rules
-
-All rules with the exception of `rule all` should contain these directives:
-- output
-- log
-- conda
-
-`output` is needed so that the rule produces something.
-
-`log` is used to specify the names and/or paths of log files. This directive should contain `stdout` and `stderr` and have the file extentions `.out` and `.err` respectively. Separating standard output and standard error allows each to be differentiated easier without having to tag each output in a single file.
-
-`conda` is used to specify a yaml file containing instructions for a conda environment. Depending on the purpose of the Snakefile, this should either be set per file or per rule. Setting a conda environment helps with reproducibility.
-
-`shell` is used to run shell commands.
-
-### Explanation of Snakemake Scripts
-
-Snakemake can take either python or R scripts. For python scripts, variables in the rule that script is run in can be accessed with `Snakemake.<directive>[0]`. This is refering to the first variable or string in a directive.
-
-Scripts can also be run in the shell directive. They would run like they would normally on the command line. In `mk_input.smk` rule, `mk_input.py` is called on and arguments are passed with sys.argv.
-
-Either method of using a script in Snakemake is fine. However, running a script by passing arguments in the with the shell directive is more favorable because it allows to script to be used independently from the workflow.
 
 # 01_example
 

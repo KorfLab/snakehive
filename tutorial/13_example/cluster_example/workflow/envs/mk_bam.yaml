@@ -1,8 +1,8 @@
 name: mk_output
 
 channels:
-- bioconda
 - conda-forge
+- bioconda
 
 dependencies:
 - samtools
