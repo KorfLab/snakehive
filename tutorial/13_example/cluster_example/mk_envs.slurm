@@ -10,7 +10,6 @@
 
 source /etc/profile
 module load conda
-source $(conda info --base)/etc/profile.d/conda.sh
 conda activate snakehive
 
 snakemake --profile mk_envs

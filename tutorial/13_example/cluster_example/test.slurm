@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=run
+#SBATCH --job-name=test
 #SBATCH --account=publicgrp
 #SBATCH --partition=low
 #SBATCH --output=jobs/%j/%x.out
@@ -8,8 +8,4 @@
 #SBATCH --mem=250MB
 #SBATCH --time=10:00
 
-source /etc/profile
-module load conda
-conda activate snakehive
-
-snakemake --profile slurm
+bash test/check_envs.sh
