@@ -10,7 +10,7 @@ rule mk_bam:
         stderr='workflow/logs/mk_bam.err'
     threads: 1
     resources:
-        mem_mb=200,
+        mem_mb=300,
         runtime=3
     shell:
         'command time -v samtools view -bS {input} > {output} 2> {log.stderr}'

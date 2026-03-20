@@ -8,7 +8,7 @@ rule mk_sam:
         stderr='workflow/logs/mk_sam.err'
     threads: 1
     resources:
-        mem_mb=200,
+        mem_mb=300,
         runtime=3
     shell:
         '''

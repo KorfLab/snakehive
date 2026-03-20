@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=test_envs
+#SBATCH --job-name=test_workflow
 #SBATCH --account=publicgrp
 #SBATCH --partition=low
 #SBATCH --output=jobs/%j_wkflow/%x.out
