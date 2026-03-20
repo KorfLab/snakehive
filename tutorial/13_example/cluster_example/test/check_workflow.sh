@@ -2,7 +2,7 @@
 
 declare -a jid
 num_trials=5
-script="test_workflow.slurm"
+script="test/test_workflow.slurm"
 
 for ((num=1; num<=num_trials; num++)); do
     if [ $num -eq 1 ]; then
