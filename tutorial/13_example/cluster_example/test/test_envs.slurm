@@ -6,11 +6,11 @@
 #SBATCH --err=jobs/%j_envs/%x.err
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=3000MB
-#SBATCH --time=15:00
+#SBATCH --time=10:00
 
 source /etc/profile
 module load conda
 conda activate snakehive
 
-rm -r .snakemake/conda/*
+rm -rf .snakemake/*
 snakemake --profile mk_envs

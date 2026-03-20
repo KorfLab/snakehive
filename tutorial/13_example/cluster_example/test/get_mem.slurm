@@ -6,7 +6,7 @@
 #SBATCH --err=jobs/%x/get_mem.err
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=5MB
-#SBATCH --time=15:00
+#SBATCH --time=5:00
 
 
 printf "This is the conda environment test" > mem_used.txt

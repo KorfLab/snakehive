@@ -12,4 +12,3 @@ for ((num=1; num<=num_trials; num++)); do
         --dependency=afterany:${jid[$((num-1))]} $script)
     fi
 done
-sbatch --dependency=afterany:${jid[${num_trials}]} test/get_mem.slurm
