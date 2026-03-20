@@ -6,6 +6,10 @@ rule mk_sam:
     log:
         stdout='workflow/logs/mk_sam.out',
         stderr='workflow/logs/mk_sam.err'
+    threads: 1
+    resources:
+        mem_mb=100,
+        runtime=3
     shell:
         '''
         command time -v \
