@@ -1,17 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=test
+#SBATCH --job-name=test_envs
 #SBATCH --account=publicgrp
 #SBATCH --partition=low
-#SBATCH --output=jobs/%j_check/%x.out
-#SBATCH --err=jobs/%j_check/%x.err
+#SBATCH --output=jobs/%j_wkflow/%x.out
+#SBATCH --err=jobs/%j_wkflow/%x.err
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=2500MB
+#SBATCH --mem=300MB
 #SBATCH --time=15:00
 
 source /etc/profile
 module load conda
-source $(conda info --base)/etc/profile.d/conda.sh
 conda activate snakehive
 
-rm -r .snakemake/conda/*
 snakemake --profile slurm --forceall

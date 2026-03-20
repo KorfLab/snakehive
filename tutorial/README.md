@@ -849,7 +849,9 @@ There are two different ways to use rules from a different file. The first is to
 
 The last thing to note is the how the config file is loaded into a module. `config: config` specifies that the config for this module can be found with the config variable. The config variable stores the configs specified in the beginning of the Snakefile.
 
+## cluster_example
 
+Functionally, there is no difference between this example and `local_example`. The only difference is that this example includes running in the cluster.
 
 # 01_example
 
