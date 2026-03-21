@@ -1,10 +1,4 @@
 #!/bin/bash
-
-printf "This is the conda environment test\n" > mem_used.txt
-printf "JobID\tMaxRSS\tState\n" >> mem_used.txt
-for file in jobs/*_envs; do
-    jobid=${file#*/}
-    jobid=${jobid%_*}
-    echo $jobid
-    sacct -j $jobid --format=JobID,MaxRSS,State --noheader >> mem_used.txt
+for rule in jobs/rule*; do
+    echo $rule
 done

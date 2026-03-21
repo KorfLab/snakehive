@@ -16,6 +16,7 @@ for file in jobs/*_envs; do
     echo $jobid
     sacct -j $jobid --format=JobID,ReqMem,MaxRSS,State --noheader >> mem_used.txt
 done
+echo
 
 printf "This is the workflow test\n" >> mem_used.txt
 printf "JobID\tReqMem\tMaxRSS\tState\n" >> mem_used.txt
@@ -25,8 +26,14 @@ for file in jobs/*_wkflow; do
     echo $jobid
     sacct -j $jobid --format=JobID,ReqMem,MaxRSS,State --noheader >> mem_used.txt
 done
+echo
 
 printf "This is the rules test\n" >> mem_used.txt
+echo
+for rule in jobs/rule*; do
+
+done
+
 printf "JobID\tReqMem\tMaxRSS\tState\n" >> mem_used.txt
 for file in jobs/rule*/*; do
     jobid=${file#*/}
