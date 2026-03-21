@@ -31,7 +31,8 @@ echo
 printf "This is the rules test\n" >> mem_used.txt
 echo
 for rule in jobs/rule*; do
-
+    jobids=$rule/*
+    printf "%s has these jobids %s" "${rule#*/}" "$jobids"
 done
 
 printf "JobID\tReqMem\tMaxRSS\tState\n" >> mem_used.txt
