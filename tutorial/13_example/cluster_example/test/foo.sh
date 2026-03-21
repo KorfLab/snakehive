@@ -9,6 +9,7 @@ for folder in jobs/rule*; do
     for ((num=0; num<"${#jobids[@]}"; num++)); do
         jobids[$num]=${jobids[$num]##*/}
         jobids[$num]=${jobids[$num]%.log}
-        echo ${jobids[$num]} >> mem_used.txt
+        sacct -j ${jobid[$num]} --format=JobID,ReqMem,MaxRSS,State --noheader \
+        >> mem_used.txt
     done
 done
