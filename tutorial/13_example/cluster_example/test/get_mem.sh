@@ -7,7 +7,7 @@ for file in jobs/*_envs; do
     jobid=${jobid%_*}
     sacct -j $jobid --format=JobID,ReqMem,MaxRSS,State --noheader >> mem_used.txt
 done
-echo
+echo >> mem_used.txt
 
 printf "This is the workflow test\n" >> mem_used.txt
 printf "JobID\tReqMem\tMaxRSS\tState\n" >> mem_used.txt
@@ -16,12 +16,18 @@ for file in jobs/*_wkflow; do
     jobid=${jobid%_*}
     sacct -j $jobid --format=JobID,ReqMem,MaxRSS,State --noheader >> mem_used.txt
 done
-echo
+echo >> mem_used.txt
 
-printf "JobID\tReqMem\tMaxRSS\tState\n" >> mem_used.txt
-for file in jobs/rule*/*; do
-    jobid=${file#*/}
-    jobid=${jobid#*/}
-    jobid=${jobid%.*}
-    sacct -j $jobid --format=JobID,ReqMem,MaxRSS,State --noheader >> mem_used.txt
+printf "This is testing the rules\n" >> mem_used.txt
+for folder in jobs/rule*; do
+    rule=${folder#*/}
+    jobids=($folder/*)
+    printf "%s\n" "$rule" >> mem_used.txt
+    printf "JobID\tReqMem\tMaxRSS\tState\n" >> mem_used.txt
+    for ((num=0; num<"${#jobids[@]}"; num++)); do
+        jobids[$num]=${jobids[$num]##*/}
+        jobids[$num]=${jobids[$num]%.log}
+        sacct -j ${jobids[$num]} --format=JobID,ReqMem,MaxRSS,State --noheader \
+        >> mem_used.txt
+    done
 done
