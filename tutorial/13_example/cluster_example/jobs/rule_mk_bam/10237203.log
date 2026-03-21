@@ -1,0 +1,98 @@
+############### Job 10237203 prolog ###############
+SLURM_NODELIST: hive-dc-7-9-47
+############### Job 10237203 prolog ###############
+host: hive-dc-7-9-47
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided remote nodes: 1
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Mar 20 19:59:20 2026]
+rule mk_bam:
+    input: resources/local_ex.sam
+    output: results/local_ex.bam
+    log: workflow/logs/mk_bam.out, workflow/logs/mk_bam.err
+    jobid: 0
+    reason: Forced execution
+    resources: mem_mb=300, mem_mib=287, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_partition=low, slurm_account=publicgrp, runtime=3
+host: hive-dc-7-9-47
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Mar 20 19:59:23 2026]
+localrule mk_bam:
+    input: resources/local_ex.sam
+    output: results/local_ex.bam
+    log: workflow/logs/mk_bam.out, workflow/logs/mk_bam.err
+    jobid: 0
+    reason: Forced execution
+    resources: mem_mb=300, mem_mib=287, disk_mb=1000, disk_mib=954, tmpdir=/tmp, slurm_partition=low, slurm_account=publicgrp, runtime=3
+Activating conda environment: .snakemake/conda/35ae983fe2c7df8ab1be85ef0d5cf763_
+[Fri Mar 20 19:59:23 2026]
+Finished jobid: 0 (Rule: mk_bam)
+1 of 1 steps (100%) done
+Storing output in storage.
+[Fri Mar 20 19:59:24 2026]
+Finished jobid: 0 (Rule: mk_bam)
+1 of 1 steps (100%) done
+Storing output in storage.
+
+############### Job 10237203 summary from hive-dc-7-9-47 ###############
+Name                : fc23ea51-39dd-4196-8a7d-e62a293edce4
+User                : russbus
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-9-47
+Cores               : 1
+GPUs                : 0
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2026-03-20T19:59:15
+Start               : 2026-03-20T19:59:18
+End                 : 2026-03-20T19:59:25
+Reserved walltime   : 00:03:00
+Used walltime       : 00:00:07
+Used CPU time       : 00:00:01
+% User (Computation): 80.49%
+% System (I/O)      :  0.00%
+Mem reserved        : 300M
+Max Mem used        : 412.00K (hive-dc-7-9-47)
+Max Disk Write      : 0.00  (hive-dc-7-9-47)
+Max Disk Read       : 0.00  (hive-dc-7-9-47)
+
+############### Job 10237203 info ###############
+JobId=10237203 JobName=fc23ea51-39dd-4196-8a7d-e62a293edce4
+   UserId=russbus(1837854) GroupId=russbus(1837854) MCS_label=N/A
+   Priority=594 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:07 TimeLimit=00:03:00 TimeMin=N/A
+   SubmitTime=2026-03-20T19:59:15 EligibleTime=2026-03-20T19:59:15
+   AccrueTime=2026-03-20T19:59:15
+   StartTime=2026-03-20T19:59:18 EndTime=2026-03-20T19:59:25 Deadline=N/A
+   PreemptEligibleTime=2026-03-20T19:59:18 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-20T19:59:18 Scheduler=Backfill
+   Partition=low AllocNode:Sid=hive-dc-7-9-47:3761337
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-9-47
+   BatchHost=hive-dc-7-9-47
+   NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=1,mem=300M,node=1,billing=1
+   AllocTRES=cpu=1,mem=300M,node=1,billing=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=300M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=(null)
+   SubmitLine=sbatch --parsable --job-name fc23ea51-39dd-4196-8a7d-e62a293edce4 --output jobs/rule_mk_bam/%j.log --export=ALL --comment rule_mk_bam -A publicgrp -p low -t 3 --mem 300 --ntasks=1 --cpus-per-task=1 -D /home/russbus/Code/snakehive/tutorial/13_example/cluster_example --wrap=/home/russbus/.conda/envs/snakehive/bin/python3.13 -m snakemake --snakefile '/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/workflow/Snakefile' --target-jobs 'mk_bam:' --allowed-rules mk_bam --cores 'all' --attempt 1 --force-use-threads  --wait-for-files '/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/.snakemake/tmp.74zjkp5r' 'resources/local_ex.sam' '/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/.snakemake/conda/35ae983fe2c7df8ab1be85ef0d5cf763_' --force --target-files-omit-workdir-adjustment --max-inventory-time 0 --retries 0 --nocolor --no-hooks --nolock --ignore-incomplete --rerun-triggers software-env mtime input params code --deployment-method conda --conda-frontend 'conda' --conda-base-path '/cvmfs/hpc.ucdavis.edu/sw/conda/root' --shared-fs-usage input-output storage-local-copies sources persistence source-cache software-deployment --wrapper-prefix 'https://github.com/snakemake/snakemake-wrappers/raw/' --latency-wait 60 --scheduler 'ilp' --local-storage-prefix base64//LnNuYWtlbWFrZS9zdG9yYWdl --scheduler-solver-path '/home/russbus/.conda/envs/snakehive/bin' --runtime-source-cache-path '/home/russbus/ondemand/data/sys/dashboard/batch_connect/sys/desktop/output/67883bf2-3665-48e6-b034-672fe406a524/.cache/snakemake/snakemake/source-cache/snakemake-runtime-cache/tmpax7hr1d3' --default-resources base64//bWVtX21iPTI1MDA= base64//ZGlza19tYj1tYXgoMippbnB1dC5zaXplX21iLCAxMDAwKSBpZiBpbnB1dCBlbHNlIDUwMDAw base64//dG1wZGlyPXN5c3RlbV90bXBkaXI= base64//c2x1cm1fcGFydGl0aW9uPWxvdw== base64//c2x1cm1fYWNjb3VudD1wdWJsaWNncnA= base64//cnVudGltZT0xMA== --executor slurm-jobstep --jobs 1 --mode 'remote'
+   WorkDir=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example
+   Comment=rule_mk_bam
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/jobs/rule_mk_bam/10237203.log
+   TresPerTask=cpu=1

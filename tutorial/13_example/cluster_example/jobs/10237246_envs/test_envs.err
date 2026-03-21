@@ -1,0 +1,11 @@
+Loading conda/base/latest
+Using profile mk_envs for setting default command line arguments.
+Building DAG of jobs...
+Creating conda environment workflow/envs/mk_sam.yaml...
+Downloading and installing remote packages.
+Cleaning up conda package tarballs.
+Environment for /home/russbus/Code/snakehive/tutorial/13_example/cluster_example/workflow/rules/../envs/mk_sam.yaml created (location: .snakemake/conda/3fff7b1d74ba3d27b70c2becf912b281_)
+Creating conda environment workflow/envs/mk_bam.yaml...
+Downloading and installing remote packages.
+Cleaning up conda package tarballs.
+Environment for /home/russbus/Code/snakehive/tutorial/13_example/cluster_example/workflow/rules/../envs/mk_bam.yaml created (location: .snakemake/conda/35ae983fe2c7df8ab1be85ef0d5cf763_)

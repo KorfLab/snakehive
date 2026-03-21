@@ -1,0 +1,57 @@
+############### Job 10237246 prolog ###############
+SLURM_NODELIST: hive-dc-7-9-47
+############### Job 10237246 prolog ###############
+
+############### Job 10237246 summary from hive-dc-7-9-47 ###############
+Name                : test_envs
+User                : russbus
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-9-47
+Cores               : 1
+GPUs                : 0
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2026-03-20T20:26:45
+Start               : 2026-03-20T20:26:47
+End                 : 2026-03-20T20:27:52
+Reserved walltime   : 00:10:00
+Used walltime       : 00:01:05
+Used CPU time       : 00:00:36
+% User (Computation): 79.24%
+% System (I/O)      : 20.76%
+Mem reserved        : 3000M
+Max Mem used        : 1.47G (hive-dc-7-9-47)
+Max Disk Write      : 1.12G (hive-dc-7-9-47)
+Max Disk Read       : 2.86G (hive-dc-7-9-47)
+
+############### Job 10237246 info ###############
+JobId=10237246 JobName=test_envs
+   UserId=russbus(1837854) GroupId=russbus(1837854) MCS_label=N/A
+   Priority=594 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:01:05 TimeLimit=00:10:00 TimeMin=N/A
+   SubmitTime=2026-03-20T20:26:45 EligibleTime=2026-03-20T20:26:45
+   AccrueTime=2026-03-20T20:26:45
+   StartTime=2026-03-20T20:26:47 EndTime=2026-03-20T20:27:52 Deadline=N/A
+   PreemptEligibleTime=2026-03-20T20:26:47 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-20T20:26:47 Scheduler=Backfill
+   Partition=low AllocNode:Sid=hive-dc-7-6-22:2070386
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-9-47
+   BatchHost=hive-dc-7-9-47
+   NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=1,mem=3000M,node=1,billing=1
+   AllocTRES=cpu=1,mem=3000M,node=1,billing=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=3000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/test/test_envs.slurm
+   SubmitLine=sbatch test/test_envs.slurm
+   WorkDir=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example
+   StdErr=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/jobs/10237246_envs/test_envs.err
+   StdIn=/dev/null
+   StdOut=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/jobs/10237246_envs/test_envs.out
+   TresPerTask=cpu=1

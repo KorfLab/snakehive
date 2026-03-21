@@ -1,0 +1,59 @@
+Loading conda/base/latest
+Using profile slurm for setting default command line arguments.
+host: hive-dc-7-9-47
+Building DAG of jobs...
+You are running snakemake in a SLURM job context. This is not recommended, as it may lead to unexpected behavior. If possible, please run Snakemake directly on the login node.
+SLURM run ID: fc23ea51-39dd-4196-8a7d-e62a293edce4
+MinJobAge 200s (>= 120s). 'squeue' should work reliably for status queries.
+Using shell: /bin/bash
+Provided remote nodes: 1
+Job stats:
+job       count
+------  -------
+all           1
+mk_bam        1
+mk_sam        1
+total         3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Mar 20 19:58:40 2026]
+rule mk_sam:
+    output: resources/local_ex.sam
+    log: workflow/logs/mk_sam.out, workflow/logs/mk_sam.err
+    jobid: 2
+    reason: Forced execution
+    resources: mem_mb=300, mem_mib=287, disk_mb=50000, disk_mib=47684, tmpdir=<TBD>, slurm_partition=low, slurm_account=publicgrp, runtime=3
+Job 2 has been submitted with SLURM jobid 10237202 (log: jobs/rule_mk_sam/10237202.log).
+[Fri Mar 20 19:59:15 2026]
+Finished jobid: 2 (Rule: mk_sam)
+1 of 3 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Mar 20 19:59:15 2026]
+rule mk_bam:
+    input: resources/local_ex.sam
+    output: results/local_ex.bam
+    log: workflow/logs/mk_bam.out, workflow/logs/mk_bam.err
+    jobid: 1
+    reason: Forced execution
+    resources: mem_mb=300, mem_mib=287, disk_mb=1000, disk_mib=954, tmpdir=<TBD>, slurm_partition=low, slurm_account=publicgrp, runtime=3
+Job 1 has been submitted with SLURM jobid 10237203 (log: jobs/rule_mk_bam/10237203.log).
+[Fri Mar 20 19:59:55 2026]
+Finished jobid: 1 (Rule: mk_bam)
+2 of 3 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Mar 20 19:59:55 2026]
+localrule all:
+    input: results/local_ex.bam
+    jobid: 0
+    reason: Forced execution
+    resources: mem_mb=2500, mem_mib=2385, disk_mb=1000, disk_mib=954, tmpdir=/tmp, slurm_partition=low, slurm_account=publicgrp, runtime=10
+[Fri Mar 20 19:59:55 2026]
+Finished jobid: 0 (Rule: all)
+3 of 3 steps (100%) done
+Complete log(s): /home/russbus/Code/snakehive/tutorial/13_example/cluster_example/.snakemake/log/2026-03-20T195834.184687.snakemake.log

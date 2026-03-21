@@ -1,0 +1,57 @@
+############### Job 10237201 prolog ###############
+SLURM_NODELIST: hive-dc-7-9-47
+############### Job 10237201 prolog ###############
+
+############### Job 10237201 summary from hive-dc-7-9-47 ###############
+Name                : test_workflow
+User                : russbus
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-9-47
+Cores               : 1
+GPUs                : 0
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2026-03-20T19:58:27
+Start               : 2026-03-20T19:58:31
+End                 : 2026-03-20T20:00:36
+Reserved walltime   : 00:05:00
+Used walltime       : 00:02:05
+Used CPU time       : 00:00:03
+% User (Computation): 79.72%
+% System (I/O)      :  0.00%
+Mem reserved        : 200M
+Max Mem used        : 67.21M (hive-dc-7-9-47)
+Max Disk Write      : 112.64K (hive-dc-7-9-47)
+Max Disk Read       : 72.21M (hive-dc-7-9-47)
+
+############### Job 10237201 info ###############
+JobId=10237201 JobName=test_workflow
+   UserId=russbus(1837854) GroupId=russbus(1837854) MCS_label=N/A
+   Priority=594 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:02:05 TimeLimit=00:05:00 TimeMin=N/A
+   SubmitTime=2026-03-20T19:58:27 EligibleTime=2026-03-20T19:58:27
+   AccrueTime=2026-03-20T19:58:27
+   StartTime=2026-03-20T19:58:31 EndTime=2026-03-20T20:00:36 Deadline=N/A
+   PreemptEligibleTime=2026-03-20T19:58:31 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-20T19:58:31 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-22:2070386
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-9-47
+   BatchHost=hive-dc-7-9-47
+   NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=1,mem=200M,node=1,billing=1
+   AllocTRES=cpu=1,mem=200M,node=1,billing=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=200M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/test/test_workflow.slurm
+   SubmitLine=sbatch test/test_workflow.slurm
+   WorkDir=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example
+   StdErr=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/jobs/10237201_wkflow/test_workflow.err
+   StdIn=/dev/null
+   StdOut=/home/russbus/Code/snakehive/tutorial/13_example/cluster_example/jobs/10237201_wkflow/test_workflow.out
+   TresPerTask=cpu=1
