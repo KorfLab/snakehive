@@ -851,7 +851,29 @@ The last thing to note is the how the config file is loaded into a module. `conf
 
 ## cluster_example
 
-Functionally, there is no difference between this example and `local_example`. The only difference is that this example includes running in the cluster.
+Functionally, there is no difference between this example and `local_example`. The only difference is that this example includes running in the cluster and testing for resource usage.
+
+### mk_envs
+
+This is a profile that only builds the conda environments needed. One thing to note about `config.yaml` in this profile is that it only has 2 options and does not include `cores` or `jobs`. These normally required flags are not needed when using `conda-create-envs-only`. However, `use-conda` is required so that Snakemake knows to look for conda environments in the rules.
+
+> Remember Snakemake looks specifically for `config.yaml` in profiles.
+
+### slurm
+
+This is another profile that is used to run the whole workflow. This profile uses the options `slurm-keep-successful-logs` and `slurm-logdir` to keep the outputs of the Snakemake submitted jobs, which will be the individual rules.
+
+`slurm-keep-successful-logs` tells Snakemake to keep the logs of any rules it runs. Normally, this is false so Snakemake only keeps the logs of failed jobs. This is used to see how much memory the rules themselves use.
+
+`slurm-logdir` tells Snakemake where to put these logs. Without specifying this, the logs will go into `.snakemake/slurm_logs`.
+
+### test
+
+This folder holds all the files used to test workflow for its resource usage.
+
+`envs_trials.sh` queues up the script that installs the environments. The scripts will run one after another but not at the same time.
+
+`get_mem.slurm` creates a file `mem_used.txt` that shows the job id, the maximum memory used, and the 
 
 # 01_example
 

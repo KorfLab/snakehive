@@ -8,3 +8,4 @@ default-resources:
   mem_mb: 2500
   runtime: 10
 slurm-keep-successful-logs: true
+slurm-logdir: "jobs/"
