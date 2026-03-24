@@ -873,7 +873,7 @@ This folder holds all the files used to test workflow for its resource usage.
 
 `envs_trials.sh` queues up the script that installs the environments. The scripts will run one after another but not at the same time.
 
-`get_mem.slurm` creates a file `mem_used.txt` that shows the job id, the maximum memory used, and the 
+`get_mem.sh` creates a file `mem_used.txt` that shows the job id, the memory requested, the maximum memory used, and the state of the job.
 
 # 01_example
 

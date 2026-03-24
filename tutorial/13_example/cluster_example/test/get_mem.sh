@@ -29,5 +29,6 @@ for folder in jobs/rule*; do
         jobids[$num]=${jobids[$num]%.log}
         sacct -j ${jobids[$num]} --format=JobID,ReqMem,MaxRSS,State --noheader \
         >> mem_used.txt
+    echo >> mem_used.txt
     done
 done
