@@ -873,7 +873,25 @@ This folder holds all the files used to test workflow for its resource usage.
 
 `envs_trials.sh` queues up the script that installs the environments. The scripts will run one after another but not at the same time.
 
-`get_mem.sh` creates a file `mem_used.txt` that shows the job id, the memory requested, the maximum memory used, and the state of the job.
+`get_mem.sh` creates a file `mem_used.txt` that shows the job id, the memory requested, the maximum memory used, and the state of the job. The file separates the jobs for conda environment testing, initiation of the workflow, and the rules that are ran in the workflow. The purpose of this file is for to be able to see how many resources are used at each stage of the workflow.
+
+`test_envs.slurm` is the slurm file that only downloads the environments. What makes this different from the `mk_envs.slurm` is that it will force Snakemake to remake the environments by deleting the save. This allows the resources to be tested multiple times.
+
+`test_workflow.slurm` is the slurm file that forces the workflow to run even if the output files exist. This is also used to test the resources of the workflow.
+
+`workflow_trials.sh` queues up the script that runs the workflow. The script will run one after another waiting for the previous one to finish.
+
+### workflow
+
+The workflow is the same as in `local_example`. The only difference lies in the rules. The rules now have specified resources they can request. This is only needed when running in the cluster because optimizing resource usage is important for quicker runs and sharing resources with others.
+
+### mk_envs.slurm
+
+This script just creates conda environments for the workflow. Note that running this will not recreate conda environments if they already exist. Also notice how this script asks for significantly more memory than other scripts because conda environments take more memory to create.
+
+### run.slurn
+
+This script runs the workflow through and only creates outputs that are not already present in `results`. Note that this script will fail with out of memory if the conda environments are not made beforehand.
 
 # 01_example
 
