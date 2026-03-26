@@ -893,32 +893,49 @@ This script just creates conda environments for the workflow. Note that running 
 
 This script runs the workflow through and only creates outputs that are not already present in `results`. Note that this script will fail with out of memory if the conda environments are not made beforehand.
 
-# 01_example
+## WILDMULTITHREADING??
+
+
+
+# 02_example
 
 ## Goal
 
-- Show how Snakemake interacts with slurm
-- Adhere to best practices by finding the minimum required resources for a job
+- Provide exmaple of wildcard usage
+- Provide example of how config files are used
+- Provide example of `params` directive
+- Show how python code can be used in Snakefiles
+- Provide example of multithreading
 
-## Explanation of Slurm Directory
+## Snakefile Explanation
 
-The cleanest way to run Snakemake is to use profiles since they allow for the desired Snakemake options to be neatly put into a yaml file. When running Snakemake as a job in hive, specifying `jobs` instead of `cores` is needed because using `cores` will run Snakemake locally instead of on the cluster.
+`rule all` is where wildcards are expanded using `expand()`.  `expand()` used in conjunction with wildcards allows multiple similar files to be called on without having to explictly stating each one. In this case, the name of the wildcard is `num` and it corresponds `trials` in the config file.
 
-In order to run each rule separately, Snakemake automatically creates and submits its own jobscripts to the cluster. This will allow Snakemake to submit a unique job to the cluster for each rule. This process is important because it allows each rule to run with its own resources. So one rule can use more resources when a different rule can use less.
+## More Snakemake Rules Explanation
 
-## sbatch script
+In any rule, contents of a config file can be accessed using `config['<someconfig>']`. When a .smk file is used in the main Snakefile, the config file must be specified in a directive called `config` in the module. After specifying the config file in the main Snakefile, configs can be accessed in the .smk file as if it is part of the main Snakefile.
 
-There are two sbatch scripts that run Snakemake `01_run.slurm` and `test/test.slurm`. The only difference between the two is that `test.slurm` is used to test the entire workflow from start to finish.
-- `test.slurm` will recreate all conda environments and rerun all the rules.
-- `01_run.slurm` is what you would see in a functioning workflow. It will only create conda environments if needed and only run rules as needed.
+`params` is a directive that allows for more variables to be specified outside of the code that is run. In this example, `rule get_read` uses params as a way to control the length and amount of reads generated, and these variables are meant to be changed depending on the user's wants. For best practices, variables that are meant to be changed should call upon a config from the config file because the goal is to have only one file that controls the operation of the Snakemake pipeline. `params` can also be used as a way to organize options for flags as seen in `rule mk_db`. Since some flags are static, `params` is not necessary.
 
-## Memory usage finder
+`threads` is a directive that specifies the number of threads a rule can use. If the number of cores is less than the specified threads, Snakemake will automatically use less threads instead of erroring out. For best practices, the number or threads should be optimized for memory usage and time.
 
-It is good practice to only request resources as needed. Requesting too much waste resources that someone else can use, and requesting too little kills the job. It is always recommended to find the maximum amount of resources the job and each rule takes.
+One important note is that using a directory as an output in a rule requires `directory(<dir>)` to be specified.
 
-`test/run_checker.sh` and `test/get_mem.slurm` are used to submit multiple of the same jobs and collect the maximum about of memory used by Snakemake.
+## Why Use Config Files
 
-The memory and time used by each job can be obtained by running `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>`.
+Config files are used as a way to control the Snakemake pipeline. It provides the user with one file where all the options for the pipeline are stored, and modifying the pipeline only takes modifying one file. Having one file that controls the pipeline allows it to be flexable and organized.
+
+## Python code in a Snakefile
+
+Any amount of python code can be used before `rule all` is specified. This can be useful for generating a list that gets used as a wildcard in the following rules. It is possible to specify configs like python variables, but this goes against best practices because it could make the Snakefile messy and harder to follow.
+
+## Resource management
+
+In this example, finding the amount of resources is different than `01_example`. This uses `full_run.py` to rerun the entire pipeline with conda installation and clearing the existing files. This command `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` is still used after the run to see specifically the amount of resources used.
+
+The program `summary.py` takes in a range of jobids and runs `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` on all of them and prints them out. It allows all the resources of the different jobs to be printed to standard out.
+
+
 
 
 work in progress
@@ -968,33 +985,6 @@ work in progress
 - `default-resources` allows for the jobs that Snakemake submit to be customized.
 
 - `slurm-keep-successful-logs` and `slurm-logdir` allow for the logs from each Snakemake job submission to be kept, and gives it a place to be sent to. Without `slurm-logdir`, the logs will be sent to `.Snakemake/slurm_logs`.
-
-# 01_example
-
-## Goal
-
-- Show how Snakemake interacts with slurm
-- Adhere to best practices by finding the minimum required resources for a job
-
-## Explanation of Slurm Directory
-
-The cleanest way to run Snakemake is to use profiles since they allow for the desired Snakemake options to be neatly put into a yaml file. When running Snakemake as a job in hive, specifying `jobs` instead of `cores` is needed because using `cores` will run Snakemake locally instead of on the cluster.
-
-In order to run each rule separately, Snakemake automatically creates and submits its own jobscripts to the cluster. This will allow Snakemake to submit a unique job to the cluster for each rule. This process is important because it allows each rule to run with its own resources. So one rule can use more resources when a different rule can use less.
-
-## sbatch script
-
-There are two sbatch scripts that run Snakemake `01_run.slurm` and `test/test.slurm`. The only difference between the two is that `test.slurm` is used to test the entire workflow from start to finish.
-- `test.slurm` will recreate all conda environments and rerun all the rules.
-- `01_run.slurm` is what you would see in a functioning workflow. It will only create conda environments if needed and only run rules as needed.
-
-## Memory usage finder
-
-It is good practice to only request resources as needed. Requesting too much waste resources that someone else can use, and requesting too little kills the job. It is always recommended to find the maximum amount of resources the job and each rule takes.
-
-`test/run_checker.sh` and `test/get_mem.slurm` are used to submit multiple of the same jobs and collect the maximum about of memory used by Snakemake.
-
-The memory and time used by each job can be obtained by running `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>`.
 
 # 02_example
 
