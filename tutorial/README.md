@@ -895,7 +895,11 @@ This script runs the workflow through and only creates outputs that are not alre
 
 ## WILDMULTITHREADING??
 
+This example shows off wildcard usage and how multiple threads can be used a real world example with blast.
 
+### config
+
+This config file contains the number of trials that will be performed, the path to the genome, and the specification for the generated reads.
 
 # 02_example
 
