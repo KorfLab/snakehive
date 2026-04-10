@@ -1,4 +1,5 @@
 import argparse
+import gzip
 import random
 import sys
 
@@ -17,7 +18,7 @@ with open(arg.stdout, 'w') as out, open(arg.stderr, 'w') as err:
     print('This is stdout\n')
     print('This is stderr\n', file=err)
 
-    with open(arg.out, 'w') as output, open(arg.genome, 'r') as fp:
+    with open(arg.out, 'w') as output, gzip.open(arg.genome, 'rt') as fp:
         genome = ''
         for line in fp:
             if '>' in line: continue

@@ -1,5 +1,5 @@
 trials: 5
-genome: 'resources/1pct.fa'
+genome: 'resources/1pct.fa.gz'
 reads:
   number: 1000
   length: 500

@@ -1,8 +1,8 @@
 name: blast
 
 channels:
-- bioconda
 - conda-forge
+- bioconda
 
 dependencies:
 - blast

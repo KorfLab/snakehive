@@ -1,8 +1,8 @@
 name: simple_env
 
 channels:
-- bioconda
 - conda-forge
+- bioconda
 
 dependencies:
 - python
