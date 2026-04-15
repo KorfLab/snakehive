@@ -899,7 +899,31 @@ This example shows off wildcard usage and how multiple threads can be used a rea
 
 ### config
 
-This config file contains the number of trials that will be performed, the path to the genome, and the specification for the generated reads.
+This config file contains the number of trials that will be performed, the path to the genome, and the specification for the generated reads. These will be referenced throughout the running of the workflow. This is the file that can be changed in order to modify the function of the workflow.
+
+### local
+
+This is a Snakemake profile that runs the workflow locally. Remember that Snakemake profiles require a file named `config.yaml` in order for the profile to work.
+
+### mk_envs
+
+This is also a Snakemake profile that only creates the conda environments. This is useful so that the resources to create the environments and the resources for running the workflow are kept separate.
+
+### resources
+
+This folder contains the inputs needed for the workflow. In the case with this workflow, there will more generated files that will populate this folder as the workflow progresses.
+
+### results
+
+This is the folder where all the desired outputs of the workflow will go.
+
+### slurm
+
+This is a profile that is geared towards running the workflow on the cluster. Notice how this profile allows Snakemake to run 5 jobs at once.
+
+### test
+
+This folder holds all the files needed to run resource testing on the workflow. This folder is the exact same as `cluster_example`.
 
 # 02_example
 
