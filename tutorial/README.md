@@ -823,11 +823,11 @@ This is where the bulk of the workflow will be. This is not meant for users to c
 
 This contains all the conda environements that are used in the workflow. Both environments use time so that to measure the resources used by the rule. `mk_sam.yaml` has python because that is what generates the the sam file. `mk_bam.yaml` has samtools because this is used to convert sam files to bam files.
 
-### logs
+#### logs
 
 This is where the logs of the each rule is directed. The log folder is meant to be used for troubleshooting and development. That is why this lives as a separate folder inside of `worflow` and not put into the result folder.
 
-### rules
+#### rules
 
 This folder houses all the rules that is used in the workflow. These rules are then used on the master Snakefile.
 
@@ -835,11 +835,11 @@ This folder houses all the rules that is used in the workflow. These rules are t
 
 `mk_sam.smk` runs a python script, that creates a sam file. This also accesses the sam file name from the config file to allow for easy customizability.
 
-### scripts
+#### scripts
 
 The only script this workflow uses is `mk_sam.py`. This script is written so it takes the arguments of the command and uses them to create a sam file and log the run of the script. This script uses `sys` versus using `snakemake` and its built in functions because `sys` allows the script to be used outside of snakemake. This is useful for testing and making it compatible with other workflows.
 
-### Snakefile
+#### Snakefile
 
 This is the master file for the workflow. Snakemake will look at this file first when it runs. The first thing to do is to specify the config file so that all the rules and the snakefile can access the config. `rule all` is used to specify the desire output for the workflow. Then all the rules that are used are loaded in through modules.
 
@@ -893,7 +893,7 @@ This script just creates conda environments for the workflow. Note that running 
 
 This script runs the workflow through and only creates outputs that are not already present in `results`. Note that this script will fail with out of memory if the conda environments are not made beforehand.
 
-## WILDMULTITHREADING??
+## wildcards_example
 
 This example shows off wildcard usage and how multiple threads can be used a real world example with blast.
 
@@ -923,47 +923,43 @@ This is a profile that is geared towards running the workflow on the cluster. No
 
 ### test
 
-This folder holds all the files needed to run resource testing on the workflow. This folder is the exact same as `cluster_example`.
+This folder holds all the files needed to run resource testing on the workflow. This folder is the exact same as the one in `cluster_example`.
 
-# 02_example
+### workflow
 
-## Goal
+#### envs
 
-- Provide exmaple of wildcard usage
-- Provide example of how config files are used
-- Provide example of `params` directive
-- Show how python code can be used in Snakefiles
-- Provide example of multithreading
+This folder contains two environments. One the environments `blast.yaml` has the dependencies blast and time. This is used to run a blast and get the resourcs of that blast run with `time -v`. The other environment 'simple.yaml' just has python. This is used to run a python script.
 
-## Snakefile Explanation
+#### logs
 
-`rule all` is where wildcards are expanded using `expand()`.  `expand()` used in conjunction with wildcards allows multiple similar files to be called on without having to explictly stating each one. In this case, the name of the wildcard is `num` and it corresponds `trials` in the config file.
+This contains all the logs produced by the workflow. These files are used to catch errors and see the resources that each part of the workflow used.
 
-## More Snakemake Rules Explanation
+#### rules
 
-In any rule, contents of a config file can be accessed using `config['<someconfig>']`. When a .smk file is used in the main Snakefile, the config file must be specified in a directive called `config` in the module. After specifying the config file in the main Snakefile, configs can be accessed in the .smk file as if it is part of the main Snakefile.
+This contains all the Snakefiles that contain the workflow rules. These rules are then loaded in by the master Snakefile to run the workflow. The rules pull from the `resources` folder and use files from `envs` and `scripts`. The outputs can go into `logs`, `resources`, or `results` depending on the purpose of the produced file.
 
-`params` is a directive that allows for more variables to be specified outside of the code that is run. In this example, `rule get_read` uses params as a way to control the length and amount of reads generated, and these variables are meant to be changed depending on the user's wants. For best practices, variables that are meant to be changed should call upon a config from the config file because the goal is to have only one file that controls the operation of the Snakemake pipeline. `params` can also be used as a way to organize options for flags as seen in `rule mk_db`. Since some flags are static, `params` is not necessary.
+- `blast.smk` contains one rule that runs a blast. This rule contains wildcards indicated by `{}` that allow multiple identical files to be produced by the same rule with one run. This rule is also allowed to use 2 threads so that blast can work faster. Remember this rule will not use multiple threads if the `jobs` is not set more than 1.
 
-`threads` is a directive that specifies the number of threads a rule can use. If the number of cores is less than the specified threads, Snakemake will automatically use less threads instead of erroring out. For best practices, the number or threads should be optimized for memory usage and time.
+- `mk_in.smk` makes the files needed to run the blast. It contains 2 rules. The first rule `get_reads` uses wildcards to create multiple random reads. The second rule `mk_db` makes the blast data base from the genome file.
 
-One important note is that using a directory as an output in a rule requires `directory(<dir>)` to be specified.
+#### scripts
 
-## Why Use Config Files
+This folder contains the scripts that are used by the various rules in the `rules` folder.
 
-Config files are used as a way to control the Snakemake pipeline. It provides the user with one file where all the options for the pipeline are stored, and modifying the pipeline only takes modifying one file. Having one file that controls the pipeline allows it to be flexable and organized.
+- `get_read.py` takes in a genome in a gzipped format. Then in outputs a file containing a random number of reads.
 
-## Python code in a Snakefile
+#### Snakefile
 
-Any amount of python code can be used before `rule all` is specified. This can be useful for generating a list that gets used as a wildcard in the following rules. It is possible to specify configs like python variables, but this goes against best practices because it could make the Snakefile messy and harder to follow.
+This is the master Snakefile that controls the workflows. It loads in all the rules it needs gives the rules the desired config file. This Snakefile also uses some python code in order to generate a list of trial numbers so that the list does not have to be manually made in the config file.
 
-## Resource management
+### mk_envs.slurm
 
-In this example, finding the amount of resources is different than `01_example`. This uses `full_run.py` to rerun the entire pipeline with conda installation and clearing the existing files. This command `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` is still used after the run to see specifically the amount of resources used.
+This slurm file is used with sbatch in the cluster to generate the environments needed for this workflow.
 
-The program `summary.py` takes in a range of jobids and runs `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` on all of them and prints them out. It allows all the resources of the different jobs to be printed to standard out.
+### run.slurm
 
-
+THis slurm file is used with sbatch to run the workflow on Hive. This jobs will fail if the environments are not downloaded before.
 
 
 work in progress
@@ -1013,44 +1009,6 @@ work in progress
 - `default-resources` allows for the jobs that Snakemake submit to be customized.
 
 - `slurm-keep-successful-logs` and `slurm-logdir` allow for the logs from each Snakemake job submission to be kept, and gives it a place to be sent to. Without `slurm-logdir`, the logs will be sent to `.Snakemake/slurm_logs`.
-
-# 02_example
-
-## Goal
-
-- Provide exmaple of wildcard usuage
-- Provide example of how config files are used
-- Provide example of `params` directive
-- Show how python code can be used in Snakefiles
-- Provide example of multithreading
-
-## Snakefile Explanation
-
-`rule all` is where wildcards are expanded using `expand()`.  `expand()` used in conjunction with wildcards allows multiple similar files to be called on without having to explictly stating each one. In this case, the name of the wildcard is `num` and it corresponds `trials` in the config file.
-
-## More Snakemake Rules Explanation
-
-In any rule, contents of a config file can be accessed using `config['<someconfig>']`. When a .smk file is used in the main Snakefile, the config file must be specified in a directive called `config` in the module. After specifying the config file in the main Snakefile, configs can be accessed in the .smk file as if it is part of the main Snakefile.
-
-`params` is a directive that allows for more variables to be specified outside of the code that is run. In this example, `rule get_read` uses params as a way to control the length and amount of reads generated, and these variables are meant to be changed depending on the user's wants. For best practices, variables that are meant to be changed should call upon a config from the config file because the goal is to have only one file that controls the operation of the Snakemake pipeline. `params` can also be used as a way to organize options for flags as seen in `rule mk_db`. Since some flags are static, `params` is not necessary.
-
-`threads` is a directive that specifies the number of threads a rule can use. If the number of cores is less than the specified threads, Snakemake will automatically use less threads instead of erroring out. For best practices, the number or threads should be optimized for memory usage and time.
-
-One important note is that using a directory as an output in a rule requires `directory(<dir>)` to be specified.
-
-## Why Use Config Files
-
-Config files are used as a way to control the Snakemake pipeline. It provides the user with one file where all the options for the pipeline are stored, and modifying the pipeline only takes modifying one file. Having one file that controls the pipeline allows it to be flexable and organized.
-
-## Python code in a Snakefile
-
-Any amount of python code can be used before `rule all` is specified. This can be useful for generating a list that gets used as a wildcard in the following rules. It is possible to specify configs like python variables, but this goes against best practices because it could make the Snakefile messy and harder to follow.
-
-## Resource management
-
-In this example, finding the amount of resources is different than `01_example`. This uses `full_run.py` to rerun the entire pipeline with conda installation and clearing the existing files. This command `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` is still used after the run to see specifically the amount of resources used.
-
-The program `summary.py` takes in a range of jobids and runs `sacct --format=jobid,state,maxrss,reqmem,elaspsed,timelimit -j <jobid>` on all of them and prints them out. It allows all the resources of the different jobs to be printed to standard out.
 
 # 03_example
 
