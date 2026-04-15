@@ -40,7 +40,7 @@ rule mk_db:
         dbtype = 'nucl',
         in_type = 'fasta'
     resources:
-        mem_mb=200,
+        mem_mb=400,
         runtime=2
     shell:
         '''
