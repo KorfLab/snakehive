@@ -1,9 +1,9 @@
-name: simple
+name: blast
 
 channels:
 - conda-forge
 - bioconda
 
 dependencies:
-- python
+- blast
 - time

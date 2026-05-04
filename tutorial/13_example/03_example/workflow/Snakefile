@@ -1,0 +1,27 @@
+configfile: 'config/config.yaml'
+
+rule all:
+	input:
+		'results/compared.txt'
+
+module mk_in:
+	snakefile:
+		'rules/mk_in.smk'
+	config:
+		config
+
+module blast:
+	snakefile:
+		'rules/blast.smk'
+	config:
+		config
+
+module compare:
+	snakefile:
+		'rules/compare.smk'
+	config:
+		config
+
+use rule * from mk_in
+use rule * from blast
+use rule * from compare
