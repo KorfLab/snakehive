@@ -1,9 +1,0 @@
-name: simple
-
-channels:
-- bioconda
-- conda-forge
-
-dependencies:
-- python
-- time
