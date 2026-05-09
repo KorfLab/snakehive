@@ -1,4 +1,14 @@
-weather:
-  - drizzle
-  - clear
-  - rain
+numbers:
+  - 1
+  - 2
+  - 3
+
+colors:
+  - "emerald"
+  - "periwinkle"
+  - "magenta"
+
+foods:
+  - "burger"
+  - "pizza"
+  - "salad"

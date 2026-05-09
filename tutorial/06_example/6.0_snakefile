@@ -1,10 +1,11 @@
 rule target:
     default_target: True
     input:
-        'results/6.0_touch.txt'
+        'results/6.0_file1_touch.txt',
+        'results/6.0_file2_touch.txt'
 
 rule touch:
     output:
         '{example_num}_touch.txt'
     shell:
-        'touch {output}'
+        'echo "Static text" > {output}'

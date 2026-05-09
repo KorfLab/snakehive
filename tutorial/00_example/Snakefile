@@ -1,6 +1,5 @@
-a = 1
 rule hello:
     output:
         'results/hello.txt'
     shell:
-        'echo "hello world {a}" > {output}'
+        'echo "hello world" > {output}'

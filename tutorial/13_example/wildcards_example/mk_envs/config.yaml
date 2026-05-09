@@ -1,2 +1,1 @@
-use-conda: true
 conda-create-envs-only: true

@@ -1,7 +1,8 @@
-rule script:
-    input:
-        '1pct.fa.gz'
+rule run_var_out:
     output:
-        'results/script.txt'
-    script:
-        'ex_py_script.py'
+        outfile = 'results/run_var_out.txt',
+        foo = 'results/1.6_ex.txt'
+    run:
+        with open(output[0], 'w') as out:
+            out.write(f'These are the outputs: {output}')
+        open(output[1], 'a').close()

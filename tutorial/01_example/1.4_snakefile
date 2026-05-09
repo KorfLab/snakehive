@@ -1,6 +1,12 @@
 rule run_directive:
     output:
-        'results/run_directive.txt'
+        'results/whats_out.txt'
     run:
         with open(output[0], 'w') as out:
-            out.write(f'this is my output: {output[0]}')
+            out.write(f'This is my output: {output}')
+
+rule shell_directive:
+    output:
+        'results/whats_out.txt'
+    shell:
+        'echo "This is my output: {output}" > {output}'

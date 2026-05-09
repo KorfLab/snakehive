@@ -1,17 +1,11 @@
-rule sample_a:
-    output:
-        'results/6.0_sample_a.txt'
-    shell:
-        'echo {output} > {output}'
+samples = ['a', 'b', 'c']
 
-rule sample_b:
-    output:
-        'results/6.0_sample_b.txt'
-    shell:
-        'echo {output} > {output}'
+rule all:
+    input:
+        expand('results/6.2_{letter}.txt', letter=samples)
 
-rule sample_c:
+rule samples:
     output:
-        'results/6.0_sample_c.txt'
+        'results/6.2_{letter}.txt'
     shell:
         'echo {output} > {output}'

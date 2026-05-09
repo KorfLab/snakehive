@@ -1,9 +1,9 @@
 fam:
-  paternal:
-    gen_1: 5
-    gen_2: 10
-    gen_3: 6
-  maternal:
-    gen_1: 3
-    gen_2: 6
-    gen_3: 10
+  dad:
+    cake: 5
+    ice_cream: 10
+    pie: 6
+  mom:
+    cake: 3
+    ice_cream: 6
+    pie: 10

@@ -1,10 +1,18 @@
-rule target:
-    default_target: True
+rule all:
     input:
-        'results/6.1_touch.txt'
+        'results/6.1_file1_msg1.txt',
+        'results/6.1_file2_msg1.txt',
+        'results/6.1_file3_msg2.txt',
+        'results/6.1_file4_msg2.txt'
 
-rule touch:
+rule msg1:
     output:
-        '{example_num}_touch.txt'
+        'results/6.1_{file_num}_msg1.txt'
     shell:
-        'touch {output}'
+        'echo "This is message one" > {output}'
+
+rule msg2:
+    output:
+        'results/6.1_{file_num}_msg2.txt'
+    shell:
+        'echo "Message 2 is clearly better than message 1" > {output}'

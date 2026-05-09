@@ -1,23 +1,11 @@
+configfile: 'config/6.3_config.yaml'
+
 rule all:
     input:
-        'results/6.1_sample_a.txt',
-        'results/6.1_sample_b.txt',
-        'results/6.1_sample_c.txt'
+        expand('results/6.3_{letter}.txt', letter=config['samples'])
 
-rule sample_a:
+rule samples:
     output:
-        'results/6.1_sample_a.txt'
-    shell:
-        'echo {output} > {output}'
-
-rule sample_b:
-    output:
-        'results/6.1_sample_b.txt'
-    shell:
-        'echo {output} > {output}'
-
-rule sample_c:
-    output:
-        'results/6.1_sample_c.txt'
+        'results/6.3_{letter}.txt'
     shell:
         'echo {output} > {output}'

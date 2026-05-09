@@ -1,8 +1,8 @@
-rule run_var_out:
+rule run_multi_out:
     output:
-        outfile = 'results/run_var_out.txt',
-        foo = 'results/foo.txt'
+        'results/run_multi_out.txt',
+        'results/1.5_ex.txt'
     run:
         with open(output[0], 'w') as out:
-            out.write(f'these are the outputs: {output}')
+            out.write(f'These are the outputs: {output}')
         open(output[1], 'a').close()

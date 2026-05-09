@@ -1,11 +1,11 @@
-samples = ['a', 'b', 'c']
+configfile: 'config/6.5_config.yaml'
 
 rule all:
     input:
-        expand('results/6.3_sample_{letter}.txt', letter=samples)
+        expand('results/combo_{num}_{let}.txt', num=config['numbers'], let=config['letters'])
 
-rule samples_all:
+rule combo:
     output:
-        'results/6.3_sample_{letter}.txt'
+        'results/combo_{num}_{let}.txt'
     shell:
-        'echo {output} > {output}'
+        'touch {output}'

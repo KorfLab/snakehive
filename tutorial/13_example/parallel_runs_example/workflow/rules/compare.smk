@@ -33,9 +33,12 @@ rule compare:
         '../envs/simple.yaml'
     resources:
         mem_mb=300,
-        runtime=2
+        runtime=4
     shell:
         '''
         rm {input}/.snakemake_timestamp 2>> {log.stderr}
-        command time -v python3 workflow/scripts/compare.py --input {input} --output {output} 2> {log.stderr}
+        command time -v python3 workflow/scripts/compare.py \
+        --input {input} \
+        --output {output} \
+        2> {log.stderr}
         '''

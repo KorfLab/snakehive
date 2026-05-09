@@ -44,10 +44,12 @@ rule mk_db:
         runtime=2
     shell:
         '''
-        command time -v makeblastdb \
-        -in {input} \
+        command time -v bash -c \
+        'gunzip -c {input} | makeblastdb \
+        -in - \
         -out {output}/1pct \
         -dbtype {params.dbtype} \
         -input_type {params.in_type} \
+        -title 1pct' \
         > {log.stdout} 2> {log.stderr}
         '''

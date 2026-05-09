@@ -1,8 +1,7 @@
-rule run_multi_out:
+rule typing:
     output:
-        'results/run_multi_out.txt',
-        'results/foo.txt'
+        'results/typing.txt'
     run:
         with open(output[0], 'w') as out:
-            out.write(f'these are the outputs: {output}')
-        open(output[1], 'a').close()
+            out.write(f'This the typing of `output`: {type(output)}\n')
+            out.write(f'\nThis the typing of `output[0]`: {type(output[0])}')

@@ -1,12 +1,12 @@
 rule all:
     input:
-        'results/part1.txt'
+        'results/in_and_out.txt'
 
-rule part1:
+rule in_and_out:
     input:
         'resources/1pct.fa.gz'
     output:
-        'results/part1.txt'
+        'results/in_and_out.txt'
     shell:
         '''
         echo "This is the input: {input}" > {output}

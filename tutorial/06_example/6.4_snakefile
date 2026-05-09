@@ -1,11 +1,11 @@
-configfile: 'config/goal.yaml'
+configfile: 'config/6.4_config.yaml'
 
 rule all:
     input:
-        expand('results/6.2_sample_{letter}.txt', letter=config['samples'])
+        expand('results/{status}_weather.txt', status=config['weather'])
 
-rule samples_all:
+rule weather:
     output:
-        'results/6.2_sample_{letter}.txt'
+        'results/{status}_weather.txt'
     shell:
-        'echo {output} > {output}'
+        'echo "The weather can be {wildcards.status} tomorrow" > {output}'

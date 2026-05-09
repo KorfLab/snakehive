@@ -2,10 +2,19 @@ configfile: 'config/6.6_config.yaml'
 
 rule all:
     input:
-        expand('results/{status}_weather.txt', status=config['weather'])
+        expand('results/6.6_files/{col}_{num}_{eat}.txt',
+            col = config['colors'],
+            num = config['numbers'],
+            eat = config['foods'])
 
-rule weather:
+rule orders:
     output:
-        'results/{status}_weather.txt'
+        'results/6.6_files/{col}_{num}_{eat}.txt'
     shell:
-        'echo "The weather can be {wildcards.status} tomorrow" > {output}'
+        '''
+        echo "starting {wildcards.col}_{wildcards.num}_{wildcards.eat}.txt"
+        sleep 3
+        echo "Can I get {wildcards.num} {wildcards.col} {wildcards.eat} to go please" > {output}
+        echo "finished {wildcards.col}_{wildcards.num}_{wildcards.eat}.txt"
+        sleep 2
+        '''
